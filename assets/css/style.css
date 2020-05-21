@@ -1,0 +1,1293 @@
+*{
+    margin:0px;
+    padding:0px;
+    scroll-behavior: smooth;
+}
+
+::selection {
+    text-shadow: none;
+    background: #dc3545;
+    color:#fafafa;
+}
+hr.naslovHr{
+    /* background: #dc3545; */
+    border:3px solid #dc3545;
+    width:50px;
+}
+
+.table td, .table th {
+    padding:1rem!important;
+    font-size:1.10em;
+}
+
+h1{
+    font-size:3.3em!important;
+    /* font-family: 'Manrope', sans-serif; */
+}
+h2{
+    font-size:2.35em!important;
+    font-family: 'Manrope', sans-serif;
+}
+
+h4{
+    font-size:1.3em!important;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+}
+a{
+    color:#333!important;
+    font-family: 'Muli', sans-serif;
+   
+}
+p{
+    font-size:1.1em;
+    letter-spacing: 0.1px;
+    font-family: 'Muli', sans-serif;
+}
+ul{
+    list-style-type: none!important;
+}
+
+/*LOAD OVERLAY */
+.loader-wrapper{
+    height: 100vh;
+    width: 100%;
+    background:#fff;
+    position: absolute;
+    top:0px;
+    left:0px;
+    padding:0px;
+    margin:0px;
+    z-index: 102;
+ }
+/* .loader-wrapper img{
+    width: 80px!important;
+}
+ @keyframes rotacija {
+    from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+  }
+ .loader-wrapper .rotate {
+    width:100px;
+    position:absolute;
+    top:40%;
+    left:47.5%;
+    display:block;
+    position: absolute;
+    font-size: 100px;
+    animation-name: rotacija;
+    animation-duration: 2s;
+ } */
+
+
+ .sk-cube-grid {
+    width: 40px;
+    height: 40px;
+    margin:400px auto;
+    
+  }
+  
+  .sk-cube-grid .sk-cube {
+    width: 33%;
+    height: 33%;
+    background-color:  #dc3545;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.6s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.6s infinite ease-in-out; 
+  }
+  .sk-cube-grid .sk-cube1 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube2 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube3 {
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
+  .sk-cube-grid .sk-cube4 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube5 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube6 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube7 {
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s; }
+  .sk-cube-grid .sk-cube8 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube9 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  
+  @-webkit-keyframes sk-cubeGridScaleDelay {
+    0%, 70%, 100% {
+      -webkit-transform: scale3D(1, 1, 1);
+              transform: scale3D(1, 1, 1);
+    } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1); 
+    }
+  }
+  
+  @keyframes sk-cubeGridScaleDelay {
+    0%, 70%, 100% {
+      -webkit-transform: scale3D(1, 1, 1);
+              transform: scale3D(1, 1, 1);
+    } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+              transform: scale3D(0, 0, 1);
+    } 
+  }
+/* END OF OVERLAY */
+
+/* HAMBURGER */
+
+#hamburger,#hamburgerTelefon{
+    position: absolute;
+    top:25px;
+    right: 20px;
+    z-index:101;
+}
+.ham,.hamTelefon{
+    width: 35px;
+    height: 3px;
+    background-color:#333;
+    transform:rotate(0deg);
+    transition: 0.3s ease;
+}
+.hamTelefon{
+    background-color:#fafafa;
+}
+.ham:nth-of-type(1),.hamTelefon:nth-of-type(1){
+    width:40px;
+}
+.ham:nth-of-type(2),.hamTelefon:nth-of-type(2){
+   margin:5px 0px;
+    margin-left:5px;
+}
+.ham:nth-of-type(3),.hamTelefon:nth-of-type(3){
+    width:30px;
+    margin-left:10px;
+}
+.hamClick{
+    background:#333;
+}
+
+.hamClick:nth-of-type(1){
+    opacity: 0;
+  }
+.hamClick:nth-of-type(2){
+    position: absolute;
+    transform: rotate(135deg);
+    top: -2px;
+    left: 5px;
+    bottom:-10px;
+ }
+ .hamClick:nth-of-type(3){
+    transform:rotate(45deg);
+    width:35px;
+    position: absolute;
+    bottom: -5px;
+    
+  }
+/* END OF HAMBURGER */
+/* NAVIGACIJA */
+.navigacija,.navigacijaTelefon{
+    display: none;
+    position: absolute;
+    /* top:30%; */
+    /* right:100px; */
+    background: #fafafa;
+    right:100px;
+    width:110vh;
+    height:100vh;
+    z-index:100;
+    overflow: hidden;
+}
+.nav-links,.nav-linksTelefon {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+   margin-top:250px;
+   
+ }
+ .nav-links li,.nav-linksTelefon li{
+     /* width:130px; */
+     margin-bottom: 20px;
+     padding-bottom: 10px;
+     text-align: center;
+     margin:10px auto;
+    
+ }
+ .nav-links li a,.nav-linksTelefon li a {
+   color: #444!important;
+   text-decoration: none;
+   font-size:30px;
+   display:flex;
+   margin:10px 0px;
+   flex-direction: column;
+   
+   transition:.25s ease-out;
+ }
+ .nav-links li:hover,.nav-linksTelefon li:hover{
+   padding-bottom: 10px;
+
+ }
+ .link--nukun::before {
+    background: transparent!important;
+ }
+ .link--nukun::after {
+    background: #444!important;
+ }
+#hamgurgerTelefon,.navigacijaTelefon,.hamTelefon{
+    opacity:0;
+}
+
+/* #navigacijaLinkovi{
+    display:none; 
+    text-align: center;
+    margin:0px auto;
+   
+    position: absolute;
+    top:10px;
+    right:200px;
+}
+#navigacijaLinkovi a li{
+    padding:8px 10px;
+    font-size:20px;
+    letter-spacing: 0.3px;
+    transition:.3s ease;
+   
+} */
+.qrKod{
+    position: absolute;
+    right:10px;
+    bottom:10px;
+}
+/* END OF NAVIGACIJA */
+/* LOGIN CSS */
+#login{
+    height:100vh;
+}
+.login_background{
+    background:url(../img/img-beta/login_background4.jpg);
+    background-size:cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-position: center;
+    text-align: center;
+}
+
+.logoLogin{
+    width: 110px;
+    margin:0px auto;
+    margin-bottom: 50px;
+}
+
+.loginForma{
+    width: 500px;
+    margin:150px auto;
+    background:rgba(0,0,0,0.55);
+    border-radius: 3px;
+    padding:100px 50px;
+}
+.loginForma input{
+    padding:9px 10px;
+    width:320px;
+    margin:3px auto;
+    border:0px;
+    border-radius:0px;
+    background:transparent;
+    border-bottom: 1px solid #fff;
+    color:#fff;
+   
+}
+.loginForma ::placeholder{
+    color:rgba(255, 255,255,0.8);
+}
+.loginForma input:focus{
+    outline:none;
+}
+i{
+    margin-right: 5px;
+    color:#fff;
+    font-size: 20px;
+}
+.loginForma input[type="submit"]{
+    background:#dc3545;
+    border:0px;
+    width:350px
+}
+
+/* END OF LOGIN */
+
+/* INDEX STRANA */
+#banerTelefon{
+    display: none;
+  
+   background-size:cover;
+   background-repeat: no-repeat;
+   background-position: top;
+}
+#home_background{
+    height: 100vh;
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+.home{
+    /* background:url(../img/img-beta/home_background17.jpg); */
+    background:url(../img/img-beta/login_background44.jpg);
+}
+#csaHeader{
+    height: 100vh;
+
+}
+#home_text{
+    background:#fafafa;
+    opacity:0;
+    padding:0px!important;
+}
+
+.naslov{
+    margin-top: 300px;
+    text-align: center;
+    color:#fafafa;
+    /* width:95%; */
+    opacity: 0;
+}
+ 
+.est{
+    font-weight: 600;
+}
+
+.kos{
+    position: absolute;
+    top:160px;
+    right:950px;
+}
+.tekst{
+    margin-top:120px;
+}
+
+.imeFirmeTekst{
+    font-weight: 600;
+}
+.btnHomeContact,.newsBtn,.clientBtn{
+    padding:10px 15px;
+    transition:.4s ease;
+    width:180px;
+    font-size:1em;
+    text-align: center;
+    border:2px solid #dc3545;
+}
+.btnHomeContact:hover,.newsBtn:hover,.clientBtn:hover{
+    background:#dc3545;
+    color:#fff!important;
+    border:2px solid transparent;
+    text-decoration: none;
+}
+.logoHome{
+    width: 100px;
+    margin:15px;
+}
+.socialHomeTelefon{
+    display: none;
+}
+.socialHome{
+    position:absolute;
+    /* bottom:60px;
+    left:475px; */
+    right:10px;
+    top:380px;
+    display: flex;
+    flex-direction: column;
+    z-index: 101;
+}
+.socialHome i{
+    color:#333;
+    font-size:30px;
+    transition:0.4s ease;
+    padding:8px;
+}
+.socialHome i:hover{
+    color:#fff;
+    background:#dc3545;
+    border-radius: 40px;
+    
+}
+#fooTelefon{
+    display: none;
+}
+#foo{
+    position: absolute;
+    bottom: 0px;
+    font-size:0.9em;
+    left:36%;
+}
+#team h2,#team hr{
+    display: none;
+}
+.founderImg{
+    width:200px;
+    padding-bottom: 10px;
+}
+.founderName{
+    font-weight: 500;
+    font-size:1.4em!important;
+}
+.founderSocialIcons i{
+    font-size:27px;   
+    transition: .4s ease;
+    padding:6px;
+}
+.founderSocialIcons i:hover{
+    color:#fff;
+    background:#dc3545;
+    border-radius: 30px;
+    
+}
+/* END OF INDEX STRANA */
+/* SERVICES STRANA */
+.services{
+    background:url(../img/img-beta/services.jpg);
+    height: 100vh;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+.pozicijaCard{
+    float:left!important;
+}
+.card{
+    height:230px!important;
+    /* width:220px!important; */
+    /* float:left!important; */
+    margin:0px 10px!important;
+    /* box-shadow: 0 2px 5px 0 rgba(220, 53, 69,0.16), 0 2px 10px 0 rgba(220, 53, 69,0.12)!important; */
+    border:0px!important;
+    border-radius: 0px!important;
+    background-color:transparent!important;
+    padding:15px 0px!important;
+    transition:.3s ease;
+}
+.card:hover{
+
+    transform: scale(1.07);
+}
+.card-title{
+    font-weight: 600!important;
+    color:#444;
+}
+.card-text{
+    padding-top:5px;
+    text-align: center;
+    font-size:0.90em!important;
+}
+.card i{
+    color:#dc3545;
+    color:#444;
+    font-size:40px;
+}
+.carousel-indicators{
+    bottom:-50px!important;
+}
+.carousel-indicators li{
+    background:#dc3545!important;
+    width: 19px!important;
+    height: 0px!important;
+    border-radius: 50%;
+}
+.carousel-multi-item .carousel-indicators .active {
+    width: 23px!important;
+    height: 3px!important;
+    max-width: 5rem!important;
+    background-color: #4285f4;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+/* END OF SERVICES STRANA */
+
+
+/* CLIENTS STRANA */
+.clients{
+    background:url(../img/img-beta/clients1.jpg);
+    height: 100vh;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+ #clients{
+    width:900px;
+    height:470px;
+    overflow-x: scroll;
+}
+::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+        display: none;
+    }
+.client{
+    padding:15px 10px;
+    transition: .3s ease;
+    /* height: 470px; */
+    /* margin:0px 15px; */
+    padding-bottom: 20px!important;
+    margin-bottom: 60px!important;
+}
+
+.client img{
+    width: 200px;
+}
+.clientBtn{
+   padding:10px 30px;
+}
+.client:hover{
+    background-color: rgba(255,255,255,1);
+    /* box-shadow: 0 2px 5px 0 rgba(220, 53, 69,0.16), 15px 2px 10px 0 rgba(220, 53, 69,0.12)!important; */
+    transform: scale(1.05);
+    overflow: visible;
+}
+.tim{
+    height: 55px;
+    font-size:0.95em!important;
+}
+/* END OF CLIENS */
+/* NEWS STRANA */
+
+.news{
+    background:url(../img/img-beta/home_background3.jpg);
+    height: 100vh;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+#vesti{
+    height:550px;
+    overflow-y: scroll;;
+}
+.vest{
+    height:330px;
+    margin:10px 30px!important;
+    transition:.3s ease;
+    padding:30px;
+}
+.vest h4{
+    font-weight: 600;
+}
+.vest:hover{
+    background-color: rgba(255,255,255,1);
+    /* color:#fff; */
+    box-shadow: 0 2px 5px 0 rgba(220, 53, 69,0.16), 0 2px 10px 0 rgba(220, 53, 69,0.12)!important;
+    transform: scale(1.02);
+}
+.newsDatum{
+    font-size:1em!important;
+}
+.newsTekst{
+    font-size:0.95em!important;
+    height: 120px;
+}
+.newsBtn{
+    padding:8px;
+    margin-top:10px!important;
+    font-size:0.95em;
+}
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+/* KRAJ NEWS STRANE */
+
+/* VEST STRANA */
+#vest{
+    height:500px;
+    overflow-y: scroll;
+   
+}
+.vestTekst{
+    text-indent: 5%;
+}
+.hesteg{
+    font-weight: 600;
+}
+/* kRAJ VEST STRANE */
+/* CONTACT STRANA */
+.contact{
+    background:url(../img/img-beta/home_background13.jpg);
+    height: 100vh;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+.contactHeadline{
+    /* width:500px; */
+    /* margin:10px auto; */
+}
+
+.contactForma input{
+    padding:9px 10px;
+    width: 55%;
+    margin:3px auto;
+    border:0px;
+    border-radius:0px;
+    background:transparent;
+    border-bottom: 1px solid #333;
+    color:#fff;
+   
+}
+textarea{
+    width: 55%;
+    margin-left:20px!important;
+    height: 130px;
+    resize: none!important;
+    border-radius:0px;
+    padding:10px;
+    border:0px solid transparent;
+}
+.contactForma ::placeholder{
+    color:rgba(0,0,0,0.8);
+}
+.contactForma input:focus{
+    outline:none;
+}
+
+textarea:focus{
+    outline:none;
+}
+i{
+    margin-right: 5px;
+    color:#333;
+    font-size: 20px;
+}
+.contactForma input[type="submit"]{
+    background:#dc3545;
+    border:0px;
+    width: 55%;
+    margin-left:20px;
+}
+.contactForma input[type="email"]{
+    width: 55%;
+}
+iframe{ 
+    height: 100vh;
+    width:105%;
+}
+.telefon a{
+    margin:0px 10px;
+    font-size: 1em;
+}
+/*  */
+/* AUTHOR STRANA */
+.author{
+    background:url(../img/img-beta/author_background3.jpg);
+    height: 100vh;
+    
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+.authorLista{
+   margin-left: 20px;
+}
+/* END OF AUTHOR */
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1600px) {
+    .sk-cube-grid {
+       
+        margin:350px auto;
+        
+      }
+    p{
+        font-size: 1.05em!important;
+    }
+    /* NAVIGACIJA */
+    .navigacija{
+        right: 70px;
+    }
+
+    /* END OF NAVIGACIJA */
+    /* INDEX STRANA */
+    #team{
+        margin-top:5px!important;
+    }
+    .tekst {
+        margin-top: 90px;
+    }
+    .founderImg{
+        width: 140px;
+    }
+    .socialHome {   
+        top: 330px;
+    }
+
+    /* END OF INDEX STRANA */
+    /* SERVICES */
+
+    .card{
+        height:240px!important;
+    }
+    /* END OF SERVICES */
+    /* CLIENTS STRANA */
+    #clients{
+        width: 750px;
+    }
+    .client img {
+        width: 170px;
+    }
+    /* END OF CLIENTS STRANA */
+    
+    
+    /* NEWS */
+    .vest{
+        height:320px;
+        margin:10px 20px!important;
+    }
+    /* END OF NEWS */
+    .card-text{
+        font-size:0.9em!important;
+    }
+    .card-body{
+        padding:1.15rem!important;
+    }
+}
+@media screen and (max-width: 1440px) {
+    h1{
+        font-size:3em!important;
+    }
+    h2{
+        font-size:2.1em!important;
+    }
+    h4{
+        font-size:1.15em!important;
+    }
+    p{
+        font-size:1em!important;
+    }
+    /* NAVIGACIJA */
+    .navigacija{
+        right:0px;
+    }
+    .nav-links li a {
+        font-size: 26px;
+    }
+    /* END OF NAVIGACIJA */
+    .socialHome i{
+        font-size: 25px;
+        padding:5px;
+    }
+    #navigacijaLinkovi a li{
+        padding: 5px 8px;
+    }
+    .card i{
+        font-size:35px;
+    }
+    .card-body {
+        padding: 1rem!important;
+    }
+    /* CLIENTS*/
+    #clients{
+        width: 650px;
+    }
+    .client{
+        margin-bottom:20px!important;
+    }
+    .client img {
+        width: 140px;
+    }
+
+    /* END OF CLIENTS */
+}
+@media screen and (max-width: 1366px) {
+    #csaHeader,#home_background{
+        height: 110vh;
+    }
+    .table td, .table th {
+        
+        font-size:1em;
+    }
+   #vest{
+       height:400px;
+   }
+    .sk-cube-grid {
+       
+        margin:300px auto;
+        
+      }
+   /* NAVIGACIJA */
+   .nav-links{
+        margin-top: 200px;
+   }
+   .navigacija{
+        right:20px;
+    }
+    .nav-links li a {
+        font-size: 24px;
+    }
+/* END OF NAVIGACIJA */
+    .naslov{
+        margin-top:200px;
+    }
+    .socialHome{
+        top: 280px;
+    }
+    #navigacijaLinkovi a li {
+        font-size: 18px;
+    }
+    /* INDEX STRANA */
+    /* .tekst {
+        margin-top: 120px;
+       
+    } */
+    
+    .btnHomeContact, .newsBtn, .clientBtn {
+        padding: 8px 12px;
+        width: 150px;
+        font-size: .9em;
+        
+    }
+    .founderName{
+        font-size:1.15em!important;
+    }
+    .founderImg {
+        width: 130px;
+    }
+    .founderSocialIcons i {
+        font-size: 20px;
+        padding: 5px;
+    }
+    /* .imgFounder{
+        margin-top:5px!important;
+    } */
+    /* END OF INDEX STRANA */
+
+    /* SERVICES STRANA */
+    #servicesCards{
+        width:1250px!important;
+    }
+    .card {
+        height: 240px!important;  
+    }
+    
+    .card-text{
+        text-align: center;
+        font-size: 0.9em!important;
+    }
+    footer{
+        font-size:0.85em;
+    }
+    .card-title {
+        margin-bottom: 0.4rem!important;
+    }
+    .tekstServices p:nth-of-type(2){
+        margin-bottom: 0em!important;
+    }
+    /* END OF SERVICES */
+    /* CLIENTS */
+    #clients{
+        margin-top:0px!important;
+        height:420px;
+    }
+   
+    /* END OF CLIENTS */
+    /* NEWS STRANA */
+    #vesti {
+        height: 450px;
+    }
+    .vest{
+        height: 360px;
+    }
+    .client img{
+        width: 130px;
+    }
+    .newsTekst {
+        font-size: 0.95em!important;
+        height: 150px;
+    }
+    /* END OF NEWS */
+    /* VEST STRANA */
+
+
+    /* END OF VEST */
+}
+@media screen and (max-width: 1280px) {
+    #csaHeader,#home_background{
+        height: 115vh;
+    }
+    #vest{
+        height:330px;
+    }
+    /* NAVIGACIJA */
+   .nav-links{
+        margin-top: 170px;
+
+    }
+    /* END OF NAVIGACIJA */
+    .logoHome {
+        width: 80px;
+        margin: 15px;
+    }
+    p {
+        font-size: 0.92em!important;
+    }
+    .founderImg {
+        width: 125px;
+    }
+    #navigacijaLinkovi a li {
+        font-size: 17px;
+    }
+    /* SERVICES STRANA */
+    .card {
+        height: 245px!important;  
+    }
+
+    /* END OF SERVICES */
+    /* NEWS STRANA */
+    #vesti {
+        height: 420px;
+    }
+    /* END OF SERVICES */
+    /* CONTACT */
+        textarea{
+            height:100px;
+        }
+
+    /* END OF CONTACT */
+}
+@media screen and (max-width: 1279px) {
+    #csaHeader,#home_background{
+        height: 100vh;
+    }
+   
+}
+@media screen and (max-width: 1024px) {
+    #vest{
+        height: 400px;
+    }
+    .sk-cube-grid {
+       
+        margin:450px auto;
+        
+      }
+    /* NAVIGACIJA */
+    .navigacija{
+        width: 75vh;
+    }
+    .nav-links{
+        margin-top: 250px;
+    }
+    .navigacija{
+        right:0px;
+    }
+
+    /* END OF NAVIGACIJA */
+
+    #navigacijaLinkovi {
+        
+        right: 140px;
+    }
+    #home_text {
+        height: 70vh;
+    }
+    #home_background{
+        height: 30vh;
+       background-position: center;
+    }
+    .naslov {
+        margin-top: 100px;
+    }
+    .tekst{
+        margin-top:100px;
+    }
+    .socialHome {  
+        top: 320px; 
+    }
+    /* INDEX STRANA */
+    .imgFounder{
+        width:600px;
+    }
+
+    /* END OF INDEX */
+    /* NEWS STRANA */
+
+    #vesti{
+        height: 500px;
+    }
+    /* END OF NEWS */
+    /* contact strana */
+    .contactForma input,.contactForma input[type="email"],textarea {
+        
+        width: 50%;
+        
+    }
+    
+    /* end of contact */
+}
+@media screen and (max-width: 768px) {
+    /* NAVIGACIJA */
+    .navigacija{
+        width: 70vh;
+    }
+    .nav-links{
+        margin-top: 180px;
+    }
+    .navigacija{
+        right:0px;
+    }
+
+    /* END OF NAVIGACIJA */
+    #home_background{
+        height: 25vh;
+       background-position: center;
+    }
+    #home_text {
+        height: 75vh;
+    }
+    .naslov {
+        margin-top: 0px;
+    }
+    
+    #vesti{
+        height:400px;
+    }
+    .socialHome {  
+        top: 280px; 
+    }
+}
+@media screen and (max-width: 425px) {
+    #vest{
+        height: 500px;
+    }
+    .sk-cube-grid {
+       
+        margin:250px auto;
+        
+      }
+    .loader-wrapper .rotate {
+        left:41%;
+     }
+     .loader-wrapper img{
+        width: 18%!important;
+    }
+    .hamClick{
+        /* position: fixed; */
+        overflow: hidden;
+    }
+    .container-fluid{
+        padding-right:0px!important;
+        padding-left:0px!important;
+    }
+    .row{
+       margin-left:0px!important;
+       margin-right: 0px!important;
+    }
+     .col-12{
+        padding-left:0px!important;
+        padding-right: 0px!important;
+    }
+    h1{
+        font-size: 2.4em!important;
+    }
+    
+    .navigacijaTelefon {
+       position: fixed;
+        right: 0px;
+        width: 56.5vh;
+        
+        height: 100vh;
+    }
+    .nav-linksTelefon {
+        margin-top: 150px;
+    }
+    .nav-linksTelefon li a{
+        font-size:23px;
+        text-transform: uppercase;
+        
+    }
+    
+    .nav-linksTelefon li{
+        width:30%;
+        margin-left: 40%;
+    }
+    
+    .socialHome,#foo{
+        display: none;
+    }
+    .socialHomeTelefon,#fooTelefon{
+        display: block;
+    }
+    .socialHomeTelefon{
+        background: #dc3545;
+       margin-top:50px;
+    }
+    .socialHomeTelefon i{
+        color:#fafafa;
+        font-size: 32px;
+        margin:0px 10px;
+        
+    }
+    #fooTelefon{
+        width:100%;
+        background:#222;
+        color:#fafafa;
+        height:29vh;
+    }
+    #fooTelefon img{
+        width: 55%;
+    }
+    footer{
+        width: 100vw;
+    }
+    
+    /* INDEX STRANA */
+    #banerTelefon{
+        display: block;
+       margin-top:60px;
+       
+       background-attachment: fixed; 
+       height: 40vh;
+      
+   }
+    #hamburger,.navigacija{
+        display:none!important;
+    }
+    #hamgurgerTelefon,.navigacijaTelefon,.hamTelefon{
+        opacity:1;
+    }
+    #home_background {
+        height: 40vh;
+        /* background-attachment: fixed bottom; */
+        
+    }
+    .link--kukuri::before {
+        transition-duration: 0s!important;
+        transition-delay: 0s!important;
+    }
+    .link--kukuri::after {
+        height: 6px!important;
+        margin-top: 0px!important;
+    }
+    .logoHome {
+        width: 60px;
+        
+        position: absolute;
+        top:0px;
+        left:10px;
+    }
+    .naslov{
+        margin-top:100px;
+    }
+    .tekst {
+        margin-top: 40px;
+    }
+    .tekst h2{
+        text-align: center;
+    }
+    .tekst hr{
+        margin-left: 70px;
+    }
+    
+    #home_text {
+        height: fit-content;
+    }
+    
+    .imgFounder {
+        width: 100%;
+        margin-left: 0px!important;
+    }
+    .founderImg {
+        width: 170px;
+    }
+    .founderName {
+        font-size: 1.25em!important;
+    }
+    .founderSocialIcons :nth-of-type(1){
+        margin-bottom: 20px;
+    }
+    .founderSocialIcons :nth-of-type(2){
+        margin-bottom: 20px;
+    }
+    .founderSocialIcons i {
+        font-size: 25px;
+        padding: 5px;
+    }
+    #team h2,#team hr{
+        display: block;
+    }
+    #team hr{
+        margin-left: 110px;
+    }
+    /* END OF INDEX STRANA */
+    /* SERVICES STRANA */
+    .card {
+        height: 200px!important;
+    }
+    #servicesCards {
+        padding-bottom:30px;
+    }
+    /* END OF SERVICES STRANA */
+    /* CLIENTS */
+    #clients {
+        width: 100%;
+    }
+
+    /* END OF CLIENTS */
+    /* NEWS */
+    #vesti,#clients {
+        height: 600px;
+    }
+    /* END OF NEWS */
+    /* CONTACT */
+    .contactForma input, .contactForma input[type="email"], textarea {
+        width: 85%;
+    }
+    textarea {
+        height: 150px;
+    }
+
+    
+    /* END OF CONTACT */
+   
+}
+/* END OF RESPONSIVE */
+@media screen and (max-width: 375px) {
+    #home_background {
+        height: 45vh;
+    }
+    
+    
+}
+@media screen and (max-width: 320px) {
+    .nav-linksTelefon li a{
+        font-size:20px;
+    }
+}
+
