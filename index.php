@@ -1,11 +1,14 @@
 <?php
 
+require_once "config/connection.php";
+  
 include 'views/fixed/head.php';
 include 'views/fixed/header.php';
 
 if(!isset($_GET['page'])){
     include "views/home.php";
 }
+
 else{
     switch($_GET['page']){
         case 'services':
@@ -19,6 +22,9 @@ else{
         break;
         case 'contact':
             include 'views/contact.php';
+        break;
+        case 'player':
+            include 'views/player.php';
         break;
         default:
             include 'views/home.php';
