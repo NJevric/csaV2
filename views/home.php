@@ -1,6 +1,5 @@
 
-        
-       
+   
                           
                     
                     <div class="tekst row d-flex justify-content-center container-fluid">
