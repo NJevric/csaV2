@@ -1,3 +1,4 @@
+
 *{
     margin:0px;
     padding:0px;
@@ -14,7 +15,12 @@ hr.naslovHr{
     border:3px solid #dc3545;
     width:50px;
 }
-
+.clientsHr{
+    border:1px solid #dc3545;
+    width:40px;
+    margin-top:0rem!important;
+    margin-bottom: 0.3rem!important;
+}
 .table td, .table th {
     padding:1rem!important;
     font-size:1.10em;
@@ -34,6 +40,7 @@ h4{
     font-family: 'Manrope', sans-serif;
     font-weight: 600;
 }
+
 a{
     color:#333!important;
     font-family: 'Muli', sans-serif;
@@ -207,7 +214,7 @@ ul{
     /* right:100px; */
     background: #fafafa;
     right:100px;
-    width:110vh;
+    width:115vh;
     height:100vh;
     z-index:100;
     overflow: hidden;
@@ -267,12 +274,17 @@ ul{
     transition:.3s ease;
    
 } */
-.qrKod{
-    position: absolute;
-    right:10px;
-    bottom:10px;
-}
+
 /* END OF NAVIGACIJA */
+
+/* REGISTER CSS */
+.registerForm{
+    margin:80px auto!important;
+    padding:50px 50px!important;
+}
+
+
+/* END OF REGISTER */
 /* LOGIN CSS */
 #login{
     height:100vh;
@@ -289,7 +301,7 @@ ul{
 .logoLogin{
     width: 110px;
     margin:0px auto;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 }
 
 .loginForma{
@@ -297,7 +309,7 @@ ul{
     margin:150px auto;
     background:rgba(0,0,0,0.55);
     border-radius: 3px;
-    padding:100px 50px;
+    padding:50px;
 }
 .loginForma input{
     padding:9px 10px;
@@ -316,20 +328,31 @@ ul{
 .loginForma input:focus{
     outline:none;
 }
-i{
+.loginIco{
     margin-right: 5px;
     color:#fff;
     font-size: 20px;
 }
-.loginForma input[type="submit"]{
+.loginForma input[type="button"]{
     background:#dc3545;
     border:0px;
     width:350px
 }
 
+/* .loginForma button{
+    background:#dc3545;
+    border:0px;
+    width:350px
+} */
+.errorMsgLogin{
+    color:#fff;
+    display: flex;
+    justify-content: center;
+}
 /* END OF LOGIN */
 
 /* INDEX STRANA */
+
 #banerTelefon{
     display: none;
   
@@ -342,6 +365,7 @@ i{
     background-size:cover;
     background-repeat: no-repeat;
     background-position: top;
+   
 }
 .home{
     /* background:url(../img/img-beta/home_background17.jpg); */
@@ -349,12 +373,13 @@ i{
 }
 #csaHeader{
     height: 100vh;
-
+   
 }
 #home_text{
     background:#fafafa;
     opacity:0;
     padding:0px!important;
+  
 }
 
 .naslov{
@@ -363,6 +388,8 @@ i{
     color:#fafafa;
     /* width:95%; */
     opacity: 0;
+    position: relative;
+    
 }
  
 .est{
@@ -375,14 +402,16 @@ i{
     right:950px;
 }
 .tekst{
+    position: relative;
     margin-top:120px;
+   
 }
 
 .imeFirmeTekst{
     font-weight: 600;
 }
 .btnHomeContact,.newsBtn,.clientBtn{
-    padding:10px 15px;
+    padding:8px;
     transition:.4s ease;
     width:180px;
     font-size:1em;
@@ -398,6 +427,9 @@ i{
 .logoHome{
     width: 100px;
     margin:15px;
+}
+.titleTeam{
+    margin-bottom: 0.2rem!important;
 }
 .socialHomeTelefon{
     display: none;
@@ -433,6 +465,16 @@ i{
     font-size:0.9em;
     left:36%;
 }
+#teamPhone{
+    display: none;
+}
+#team{
+    overflow-x: hidden;
+}
+.founder{
+    width:200px;
+    margin-right: 20px;
+}
 #team h2,#team hr{
     display: none;
 }
@@ -443,6 +485,9 @@ i{
 .founderName{
     font-weight: 500;
     font-size:1.4em!important;
+}
+.founderSocialIcons{
+    width: 200px!important;
 }
 .founderSocialIcons i{
     font-size:27px;   
@@ -485,10 +530,12 @@ i{
 
     transform: scale(1.07);
 }
+
 .card-title{
     font-weight: 600!important;
     color:#444;
 }
+
 .card-text{
     padding-top:5px;
     text-align: center;
@@ -498,6 +545,9 @@ i{
     color:#dc3545;
     color:#444;
     font-size:40px;
+}
+.card:hover .icon{
+    color:#dc3545;
 }
 .carousel-indicators{
     bottom:-50px!important;
@@ -530,38 +580,113 @@ i{
 }
  #clients{
     width:900px;
-    height:470px;
+    height:500px;
     overflow-x: scroll;
+    padding-right:15px;
 }
 ::-webkit-scrollbar,
     *::-webkit-scrollbar {
-        display: none;
+        display: block;
     }
+::-webkit-scrollbar:horizontal{
+    display:none;
+}
 .client{
-    padding:15px 10px;
+    /* padding:15px 10px; */
     transition: .3s ease;
-    /* height: 470px; */
+    height: 70%;
+    
     /* margin:0px 15px; */
-    padding-bottom: 20px!important;
-    margin-bottom: 60px!important;
+    /* padding-bottom: 20px!important; */
+    margin-bottom: 30px;
+    /* background:#fff; */
+    transition: .3s ease;
+    
 }
 
-.client img{
-    width: 200px;
+.freeAgent{
+    font-size:22px;
 }
+.client h4{
+    font-weight: 500;
+}
+.client img{
+    width:100%;
+    padding-top:15px;
+    transition: .3s ease;
+}
+
 .clientBtn{
-   padding:10px 30px;
+   position: absolute;
+   width:75%;
+   bottom:10px;
+   left:12.5%;
+   font-size:0.9em;
 }
 .client:hover{
     background-color: rgba(255,255,255,1);
-    /* box-shadow: 0 2px 5px 0 rgba(220, 53, 69,0.16), 15px 2px 10px 0 rgba(220, 53, 69,0.12)!important; */
-    transform: scale(1.05);
+    box-shadow: 0 2px 5px 0 rgba(220, 53, 69,0.16), 0 2px 10px 0 rgba(220, 53, 69,0.12)!important;
+    /* transform: scale(1.03); */
     overflow: visible;
 }
-.tim{
+.client img:hover{
+    transform: scale(1.1);
+    overflow: visible;
+}
+#contractDdl,#position{
+    width: 200px!important;
+    border-radius: 0px!important;
+    /* height: 35px!important; */
+}
+option{
+    font-size:18px;
+}
+.selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding:6px 0px;
+  }
+  
+  .sakrijOption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  /* OVER SLUZI DA SAKRIJE 'SELECT NA OPTION' KADA SE KLIKNE NA SELECT */
+
+  #chbs {
+    display: none;
+    border: 1px #dadada solid;
+    transition: 0.5s ease;
+    position: absolute;
+    z-index:100000;
+    background:#fff;
+    width:200px;
+  }
+ 
+  #chbs label {
+    display: block;
+    padding:3px 0px;
+    padding-left: 10px;
+    color: #495057;
+  }
+
+  #chbs label:hover {
+    background-color: #1e90ff;
+    color:#fff;
+  }
+}
+/* .tim{
     height: 55px;
     font-size:0.95em!important;
-}
+} */
 /* END OF CLIENS */
 /* NEWS STRANA */
 
@@ -606,6 +731,7 @@ i{
 }
 ::-webkit-scrollbar {
     width: 10px;
+    padding-left:15px;
   }
   
   /* Track */
@@ -628,8 +754,9 @@ i{
 #vest{
     height:500px;
     overflow-y: scroll;
-   
+   padding-right: 30px;
 }
+
 .vestTekst{
     text-indent: 5%;
 }
@@ -659,7 +786,7 @@ i{
     border-radius:0px;
     background:transparent;
     border-bottom: 1px solid #333;
-    color:#fff;
+    /* color:#fff; */
    
 }
 textarea{
@@ -670,6 +797,7 @@ textarea{
     border-radius:0px;
     padding:10px;
     border:0px solid transparent;
+    border-bottom:1px solid #333;
 }
 .contactForma ::placeholder{
     color:rgba(0,0,0,0.8);
@@ -686,10 +814,17 @@ i{
     color:#333;
     font-size: 20px;
 }
-.contactForma input[type="submit"]{
+/* .contactForma input[type="submit"]{
     background:#dc3545;
     border:0px;
     width: 55%;
+    margin-left:20px;
+} */
+.contactForma button{
+    background:#dc3545;
+    border:0px;
+    width: 55%;
+    padding:10px 0px;
     margin-left:20px;
 }
 .contactForma input[type="email"]{
@@ -702,6 +837,10 @@ iframe{
 .telefon a{
     margin:0px 10px;
     font-size: 1em;
+}
+
+#restart{
+    visibility: hidden;
 }
 /*  */
 /* AUTHOR STRANA */
@@ -721,6 +860,12 @@ iframe{
 /* RESPONSIVE */
 
 @media screen and (max-width: 1600px) {
+    .founder{
+        width: 180px!important;
+    }
+    .founderSocialIcons{
+        width: 180px!important;
+    }
     .sk-cube-grid {
        
         margin:350px auto;
@@ -738,13 +883,15 @@ iframe{
     /* INDEX STRANA */
     #team{
         margin-top:5px!important;
+        
     }
     .tekst {
         margin-top: 90px;
     }
-    .founderImg{
+    .founder,.founderImg{
         width: 140px;
     }
+    
     .socialHome {   
         top: 330px;
     }
@@ -780,6 +927,7 @@ iframe{
     }
 }
 @media screen and (max-width: 1440px) {
+    
     h1{
         font-size:3em!important;
     }
@@ -800,9 +948,18 @@ iframe{
         font-size: 26px;
     }
     /* END OF NAVIGACIJA */
+    .founderImg{
+        width: 140px;
+    }
     .socialHome i{
         font-size: 25px;
         padding:5px;
+    }
+    .founder{
+        width: 150px!important;
+    }
+    .founderSocialIcons{
+        width: 150px!important;
     }
     #navigacijaLinkovi a li{
         padding: 5px 8px;
@@ -818,7 +975,8 @@ iframe{
         width: 650px;
     }
     .client{
-        margin-bottom:20px!important;
+        /* margin-bottom:20px!important; */
+        height: 65%;
     }
     .client img {
         width: 140px;
@@ -868,17 +1026,31 @@ iframe{
        
     } */
     
-    .btnHomeContact, .newsBtn, .clientBtn {
+    .btnHomeContact, .newsBtn {
         padding: 8px 12px;
         width: 150px;
         font-size: .9em;
         
     }
+    .client{
+        height: 68%;
+    }
+    .clientBtn{
+        /* width: 45%;
+        left:27.5%; */
+        /* bottom:-10px; */
+    }
     .founderName{
         font-size:1.15em!important;
     }
+    .founder{
+        width: 140px!important;
+    }
+    .founderSocialIcons{
+        width: 140px!important;
+    }
     .founderImg {
-        width: 130px;
+        width: 135px;
     }
     .founderSocialIcons i {
         font-size: 20px;
@@ -958,9 +1130,6 @@ iframe{
     p {
         font-size: 0.92em!important;
     }
-    .founderImg {
-        width: 125px;
-    }
     #navigacijaLinkovi a li {
         font-size: 17px;
     }
@@ -970,6 +1139,11 @@ iframe{
     }
 
     /* END OF SERVICES */
+    /* CLIENTS STRANA */
+    #contractDdl,#position,#chbs{
+        width: 175px!important;
+    }
+    /* END OF CLIENTS */
     /* NEWS STRANA */
     #vesti {
         height: 420px;
@@ -989,6 +1163,7 @@ iframe{
    
 }
 @media screen and (max-width: 1024px) {
+
     #vest{
         height: 400px;
     }
@@ -1043,12 +1218,12 @@ iframe{
     }
     /* END OF NEWS */
     /* contact strana */
-    .contactForma input,.contactForma input[type="email"],textarea {
-        
-        width: 50%;
-        
+    .contactForma input,.contactForma input[type="email"],textarea {   
+        width: 50%;    
     }
-    
+    .founder{
+        width: 100px;
+    }
     /* end of contact */
 }
 @media screen and (max-width: 768px) {
@@ -1081,8 +1256,21 @@ iframe{
     .socialHome {  
         top: 280px; 
     }
+    #home_text{
+        height: 80vh;
+    }
 }
 @media screen and (max-width: 425px) {
+    #team{
+        display: none;
+    }
+    #teamPhone{
+        display: block;
+    }
+    ::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+        display: none;
+    }
     #vest{
         height: 500px;
     }
@@ -1120,7 +1308,7 @@ iframe{
     .navigacijaTelefon {
        position: fixed;
         right: 0px;
-        width: 56.5vh;
+        width: 100%;
         
         height: 100vh;
     }
@@ -1133,10 +1321,10 @@ iframe{
         
     }
     
-    .nav-linksTelefon li{
+    /* .nav-linksTelefon li{
         width:30%;
         margin-left: 40%;
-    }
+    } */
     
     .socialHome,#foo{
         display: none;
@@ -1171,9 +1359,9 @@ iframe{
     #banerTelefon{
         display: block;
        margin-top:60px;
-       
+/*        
        background-attachment: fixed; 
-       height: 40vh;
+       height: 35vh; */
       
    }
     #hamburger,.navigacija{
@@ -1182,6 +1370,7 @@ iframe{
     #hamgurgerTelefon,.navigacijaTelefon,.hamTelefon{
         opacity:1;
     }
+    
     #home_background {
         height: 40vh;
         /* background-attachment: fixed bottom; */
@@ -1199,8 +1388,8 @@ iframe{
         width: 60px;
         
         position: absolute;
-        top:0px;
-        left:10px;
+        top:-100px;
+        left:-5px;
     }
     .naslov{
         margin-top:100px;
@@ -1229,6 +1418,10 @@ iframe{
     .founderName {
         font-size: 1.25em!important;
     }
+    .founderSocialIcons{
+        width: 170px!important;
+        margin:0px auto;
+    }
     .founderSocialIcons :nth-of-type(1){
         margin-bottom: 20px;
     }
@@ -1239,12 +1432,21 @@ iframe{
         font-size: 25px;
         padding: 5px;
     }
-    #team h2,#team hr{
+    
+    #teamPhone h2,#team hr{
         display: block;
     }
-    #team hr{
+    #teamPhone hr{
         margin-left: 110px;
     }
+    /* .ourTeamImg{
+        background:url(../img/img-beta/clients.jpg);
+        background-size: cover;
+        height: 35vh;
+        background-repeat: no-repeat;
+        background-position: bottom;
+
+    } */
     /* END OF INDEX STRANA */
     /* SERVICES STRANA */
     .card {
@@ -1257,13 +1459,27 @@ iframe{
     /* CLIENTS */
     #clients {
         width: 100%;
+        padding-right: 0px;
     }
-
+    .client{
+        margin-bottom: 20px!important;
+        height: 49%;
+    }
+    #contractDdl,#position,#chbs{
+        width: 150px!important;
+    }
     /* END OF CLIENTS */
     /* NEWS */
     #vesti,#clients {
         height: 600px;
     }
+    .newsTekst {
+        height: 130px;
+    }
+    .vest {
+        height: 320px;
+    }
+
     /* END OF NEWS */
     /* CONTACT */
     .contactForma input, .contactForma input[type="email"], textarea {
@@ -1271,6 +1487,7 @@ iframe{
     }
     textarea {
         height: 150px;
+       
     }
 
     
@@ -1282,12 +1499,38 @@ iframe{
     #home_background {
         height: 45vh;
     }
-    
+    .clientBtn {
+        width: 80%;
+        left: 10%;
+    }
+   
+}
+@media screen and (max-width: 375px) and (max-height: 667px) {
+    #home_background {
+        height: 45vh;
+    }
+    .clientBtn {
+        width: 80%;
+        left: 10%;
+    }
+    /* .navigacijaTelefon {
+        position: fixed;
+         right: 0px;
+         width: 60vh;
+         height: 100vh;
+     } */
     
 }
 @media screen and (max-width: 320px) {
     .nav-linksTelefon li a{
         font-size:20px;
+    }
+    .clientBtn {
+        width: 88%;
+        left: 6%;
+    }
+    .client img {
+        width: 105px;
     }
 }
 
