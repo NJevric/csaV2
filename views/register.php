@@ -10,7 +10,7 @@ session_start();
         <meta name="description" content="CSA Sports Management is a full-service sports management agency dedicated to providing clients and partners with assistance in contract negotiation, career + brand management services and financial planning with the utmost professionalism, reliability and transparency."/>
         <meta name="keywords" content="CSA,csa,introducing,player,sports,sports management,agency,guard,ncaa,"/>
         <meta name="copyright" content="59Develop 2019"/>
-        <title>CSA Sports Management | Login</title>
+        <title>CSA Sports Management | Register</title>
         <link rel="stylesheet" type="text/css" href="../assets/css/style.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
         <link rel="icon" type="image/x-icon" href="../assets/img/ikona.ico" /> 
@@ -20,34 +20,37 @@ session_start();
         <div id="login" class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mx-auto login_background">
-                    <form action="" method="POST" class="loginForma">
+                    <form action="" method="POST" class="loginForma registerForm">
                     <img src="../assets/img/logoHeader.png" alt="CSA Logo" class="logoLogin text-center"/>
-                    <h2 class="text-white">Login</h2>
-                        <?php 
-                                if(isset($_SESSION['success'])){
-                                    echo "<p class='text-center mb-5 text-white'>" . $_SESSION['success'] . "</p>";
-                                    unset($_SESSION['success']);
-                                }
-                            ?>
+                    <h2 class="text-white">Register</h2>
                         <div class="form-group row">
-                            
+                            <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
+                                <i class="fas fa-user-alt loginIco"></i>
+                                <input type="text" class="" name="firstNameRegister" id="firstNameRegister" placeholder="First Name" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
+                                <p class="errorMsgRegister text-white" id="errorMsgFirstName"></p>
+                            </div>
+                            <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
+                                <i class="fas fa-user-alt loginIco"></i>
+                                <input type="text" class="" name="lastNameRegister" id="lastNameRegister" placeholder="Last Name" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
+                                <p class="errorMsgRegister text-white" id="errorMsgLastName"></p>
+                            </div>
                             <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
                                 <i class="far fa-envelope loginIco"></i>
-                                <input type="text" class="" name="usernameLog" id="usernameLog" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
-                                <p class="errorMsgLogin" id="errorEmail"></p>
+                                <input type="text" class="" name="usernameRegister" id="usernameRegister" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
+                                <p class="errorMsgRegister text-white" id="errorMsgEmail"></p>
                             </div>
                             <div class="col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
                                 <i class="fas fa-unlock-alt loginIco"></i>
-                                <input type="password" class="" name="passLog" id="passLog" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'"/>
-                                <p class="errorMsgLogin" id="errorPass"></p>
+                                <input type="password" class="" name="passRegister" id="passRegister" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'"/>
+                                <p class="errorMsgRegister text-white" id="errorMsgPass"></p>
                             </div>
                             <div class="col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
-                                <input type="button" class="btn-danger btnSubmit mt-4" name="btnLogin" id="btnLogin" value="Login"/>
-                                <p class="text-center mt-4 text-white">Don't have an account? <a href="register.php" class="text-primary font-weight-bold">Join</a></p>
+                                <input type="button" class="btn-danger btnSubmit mt-4" name="btnRegister" id="btnRegister" value="Register"/>
+                                <p class="text-center mt-4 text-white">Already have an account? <a href="login.php" class="text-primary font-weight-bold">Join</a></p>
                             </div>
-                            <div class="success col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
+                            <!-- <div class="errorMsgLogin col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
                              
-                            </div>
+                            </div> -->
                         </div>
                     </form>
                     
