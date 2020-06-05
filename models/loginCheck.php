@@ -38,22 +38,21 @@
                     $error["errorPass"]="Wrong password, try again";
                     $code=422;     
 
-                    $adresaprimaoca='njevric9@gmail.com';
-                    $naslov='Message from Csa Login';
-                    $sadrzajMail='Someone tried to login with your password';
-                    $dolazniSajt='From:csasportsmanagement.com';
-                    mail($adresaprimaoca,$naslov,$sadrzajMail,$dolazniSajt);
+                    // $adresaprimaoca='njevric9@gmail.com';
+                    // $naslov='Message from Csa Login';
+                    // $sadrzajMail='Someone tried to login with your password';
+                    // $dolazniSajt='From:csasportsmanagement.com';
+                    // mail($adresaprimaoca,$naslov,$sadrzajMail,$dolazniSajt);
                 }
 
-                if($code!=422){
-                  
-                    $resultLogin->execute([$email,$password]);
-                    if($resultLogin->rowCount()==1){
-                        $user=$resultLogin->fetch(); 
-                        $_SESSION['korisnik']=$user;  
-                        $code=200;      
-                    }
-                } 
+           
+                $resultLogin->execute([$email,$password]);
+                if($resultLogin->rowCount()==1){
+                    $user=$resultLogin->fetch(); 
+                    $_SESSION['admin']=$user;  
+                    $code=200;      
+                }
+                
             }
             catch(PDOException $e){
                 $code=500;
