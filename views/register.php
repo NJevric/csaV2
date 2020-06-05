@@ -24,29 +24,30 @@ session_start();
                     <img src="../assets/img/logoHeader.png" alt="CSA Logo" class="logoLogin text-center"/>
                     <h2 class="text-white">Register</h2>
                         <div class="form-group row">
-                            <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
+                            <div class="col-lg-12 col-12 mb-0 mb-md-0 mx-auto">
                                 <i class="fas fa-user-alt loginIco"></i>
                                 <input type="text" class="" name="firstNameRegister" id="firstNameRegister" placeholder="First Name" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
                                 <p class="errorMsgRegister text-white" id="errorMsgFirstName"></p>
                             </div>
-                            <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
+                            <div class="col-lg-12 col-12 mb-0 mb-md-0 mx-auto">
                                 <i class="fas fa-user-alt loginIco"></i>
                                 <input type="text" class="" name="lastNameRegister" id="lastNameRegister" placeholder="Last Name" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
                                 <p class="errorMsgRegister text-white" id="errorMsgLastName"></p>
                             </div>
-                            <div class="col-lg-12 col-10 mb-0 mb-md-0 mx-auto">
+                            <div class="col-lg-12 col-12 mb-0 mb-md-0 mx-auto">
                                 <i class="far fa-envelope loginIco"></i>
                                 <input type="text" class="" name="usernameRegister" id="usernameRegister" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Username'"/>
                                 <p class="errorMsgRegister text-white" id="errorMsgEmail"></p>
                             </div>
-                            <div class="col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
+                            <div class="col-lg-12 col-12 mb-3 mb-md-0 mx-auto">
                                 <i class="fas fa-unlock-alt loginIco"></i>
                                 <input type="password" class="" name="passRegister" id="passRegister" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'"/>
                                 <p class="errorMsgRegister text-white" id="errorMsgPass"></p>
                             </div>
-                            <div class="col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
+                            <div class="col-lg-12 col-12 mb-3 mb-md-0 mx-auto">
                                 <input type="button" class="btn-danger btnSubmit mt-4" name="btnRegister" id="btnRegister" value="Register"/>
-                                <p class="text-center mt-4 text-white">Already have an account? <a href="login.php" class="text-primary font-weight-bold">Join</a></p>
+                                <p class="text-center mt-4 text-white">Already have an account? <a href="login.php" class="text-primary font-weight-bold">Member Login</a></p>
+                                <p class="text-center mt-4 text-white">Go back to <a href="../index.php" class="text-primary font-weight-bold">home page </a></p>
                             </div>
                             <!-- <div class="errorMsgLogin col-lg-12 col-10 mb-3 mb-md-0 mx-auto">
                              
