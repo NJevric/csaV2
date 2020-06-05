@@ -543,7 +543,11 @@ if(url.indexOf("login.php")!=-1){
                 success:function(data){
                     console.log("sve je ok sa serverom");
                     console.log(data);
-                    window.location='../index.php?page=home';
+                    // if(status==200){
+                        window.location='../views/admin.php';
+                    // }
+                    
+                    
                 },
                 error:function(xhr){
                     if(xhr.status==422){
@@ -582,35 +586,35 @@ if(url.indexOf("login.php")!=-1){
             let password=document.getElementById("passRegister").value;
             let error=document.getElementsByClassName("errorMsgRegister");
 
-            let regFirstName = "/^[A-Z][a-z]{2,15}$/";
-            let regLastName = "/^[A-Z][a-z]{2,15}$/";
+            let regFirstName = /^[A-Z][a-z]{2,15}$/;
+            let regLastName = /^[A-Z][a-z]{2,15}$/;
             let regPass= /^.{5,60}$/;
             let regEmail=/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let errors =[];
 
             if(!firstName.match(regFirstName)){
-                if(email == ""){
+                if(firstName == ""){
                     error[0].innerHTML="First Name field is mandatory";
                     stilGreskaBordura("firstNameRegister");
                     errors.push("1");
                 }
-                if(email != ""){
+                
                     error[0].innerHTML="Invalid first name format (Fist letter must be uppercase)";
                     stilGreskaBordura("firstNameRegister");
                     errors.push("2");
-                }
+                
             }
             if(!lastName.match(regLastName)){
-                if(email == ""){
+                if(lastName == ""){
                     error[1].innerHTML="Last Name field is mandatory";
                     stilGreskaBordura("lastNameRegister");
                     errors.push("3");
                 }
-                if(email != ""){
+                
                     error[1].innerHTML="Invalid last name format (Fist letter must be uppercase)";
                     stilGreskaBordura("lastNameRegister");
                     errors.push("4");
-                }
+                
             }
     
             if(!email.match(regEmail)){
@@ -688,6 +692,284 @@ if(url.indexOf("login.php")!=-1){
             });
             return true;
         });
+    }
+
+    // ADMIN PANEL
+    if(url.indexOf("admin.php")!=-1){
+        
+        document.getElementById("logout").addEventListener("click",function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "../models/admin/logout.php",
+                method: "post",
+                dataType: "json",
+                data:{
+                    clicked : true
+                },
+                success:function(data){
+                    console.log("sve je ok sa serverom");
+                    window.location="login.php";
+                },
+                error:function(xhr){
+                    if(xhr.status==400 || xhr.status==500){
+                        alert(xhr.responseJSON.errorMsg);
+                    }
+                    else{
+                        console.log(xhr);
+                    }
+                }
+            });
+        });
+
+        document.getElementById("allClients").addEventListener("click",function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "../models/admin/clientsAll.php",
+                method: "post",
+                dataType: "json",
+                data:{
+                    clicked : true
+                },
+                success:function(data){
+                    console.log("sve je ok sa serverom");
+                    console.log(data);
+                    clientsAdminAll(data);
+                    
+                    
+                },
+                error:function(xhr){
+                    if(xhr.status==400){
+
+                    }
+                    if(xhr.status==500){
+                        alert(xhr.responseJSON.errorMsgServer);
+                    }
+                    else{
+                        console.log(xhr);
+                    }
+                }
+            });
+
+            clientsAdminAll = (data) => {
+                
+                let ispis=`<div class="row player">
+                <table class="table tableClients">
+                  <tbody>
+                    <tr>
+                      <th scope="row">ID</th>
+                      <th scope="row">Img</th>
+                      <th scope="row">Name</th>
+                      <th scope="row">Height</th>
+                      <th scope="row">Weight</th>
+                      <th scope="row">Position</th>
+                      <th scope="row">DOB</th>
+                      <th scope="row">Passport</th>
+                      <th scope="row">Team</th>
+                      <th scope="row">Active</th>
+                      <th scope="row">Edit</th>
+                      <th scope="row">Delete</th>
+                    </tr>`;
+                data.forEach(i => {
+                   
+                    ispis+=` 
+                    <tr>
+                      <td class="text-center">
+                        1
+                      </td>
+                      <td class="text-center imgClient">
+                        <img src="../${i.src}" alt="${i.alt}" class="img-fluid"/>
+                      </td>
+                      <td class="text-center">
+                      ${i.first_name + " " + i.last_name}
+                      </td>
+                      <td class="text-center">
+                      ${i.height}
+                      </td>
+                      <td class="text-center">
+                      ${i.weight}
+                      </td>
+                      <td class="text-center">
+                        ${i.position[0] + "/"+ i.position[1]} 
+                        
+                        </td>
+                     
+              
+                        
+                 
+                       
+                       
+                        
+               
+                    <td class="text-center">
+                      ${i.dob}
+                      </td>
+                      <td class="text-center">
+                      ${i.country}
+                      </td>
+                      <td class="text-center">
+                      ${i.name}
+                      </td>
+                      <td class="text-center">
+                      ${i.free_agent}
+                      </td>
+                      <td class="text-center">
+                        <a href="">Edit</a>
+                      </td>
+                      <td class="text-center">
+                        <a href="">Delete</a>
+                      </td>
+                    </tr>
+                  `;
+                });
+                ispis+=`</tbody>               
+                </table>              
+              </div>`
+                document.getElementById("prikaz").innerHTML=ispis;
+            }
+
+           
+        });
+
+        document.getElementById("postsAll").addEventListener("click",function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "../models/admin/postsAll.php",
+                method: "post",
+                dataType: "json",
+                data:{
+                    clicked : true
+                },
+                success:function(data){
+                    console.log("sve je ok sa serverom");
+                    console.log(data);
+                    postsAllAdmin(data);
+                },
+                error:function(xhr){
+                    if(xhr.status==400){
+
+                    }
+                    if(xhr.status==500){
+                        alert(xhr.responseJSON.errorMsgServer);
+                    }
+                    else{
+                        console.log(xhr);
+                    }
+                }
+            });
+
+            postsAllAdmin = (data) => {
+                let ispis=`
+                <div class="row player">
+                    <table class="table tableClients">
+                    <tbody>
+                        <tr>
+                            <th scope="row">ID</th>
+                            <th scope="row">Headline</th>
+                            <th scope="row">Date</th>
+                            <th scope="row">Text</th>
+                            <th scope="row">Edit</th>
+                            <th scope="row">Delete</th>
+                        </tr>`;
+                    data.forEach(i => {
+                        ispis+=printSingleNewsAdmin(i);
+                    });
+           
+                ispis+=`</tbody>               
+                </table>              
+              </div>`
+            document.getElementById("prikaz").innerHTML=ispis;
+            }
+            printSingleNewsAdmin = (i) => {
+                return `
+                 <tr>
+                <td class="text-center">
+                    ${i.id_news}
+                </td>
+                <td class="text-center">
+                ${i.headline}
+                </td>
+                <td class="text-center">
+                ${i.date}
+                </td>
+                <td class="tekst">
+                ${i.text}
+                </td>
+                <th class="text-center"><a href="">Edit</a></th>
+                <th class="text-center"><a href="">Delete</a></th>
+            </tr>`;
+            }
+        });
+
+        document.getElementById("usersAll").addEventListener("click",function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "../models/admin/usersAll.php",
+                method: "post",
+                dataType: "json",
+                data:{
+                    clicked : true
+                },
+                success:function(data){
+                    console.log("sve je ok sa serverom");
+                    console.log(data);
+                    usersAllAdmin(data);
+                },
+                error:function(xhr){
+                    if(xhr.status==400){
+
+                    }
+                    if(xhr.status==500){
+                        alert(xhr.responseJSON.errorMsgServer);
+                    }
+                    else{
+                        console.log(xhr);
+                    }
+                }
+            });
+
+            usersAllAdmin = (data) => {
+                let ispis=`
+                <div class="row player">
+                    <table class="table tableClients">
+                    <tbody>
+                        <tr>
+                            <th scope="row">ID</th>
+                            <th scope="row">Image</th>
+                            <th scope="row">Name</th>
+                            <th scope="row">Email</th>
+                            <th scope="row">Edit</th>
+                            <th scope="row">Delete</th>
+                        </tr>`;
+                    data.forEach(i => {
+                        ispis+=printSingleUserAdmin(i);
+                    });
+           
+                ispis+=`</tbody>               
+                </table>              
+              </div>`
+            document.getElementById("prikaz").innerHTML=ispis;
+            }
+            printSingleUserAdmin = (i) => {
+                return `
+                 <tr>
+                <td class="text-center">
+                ${i.id_user}
+                </td>
+                <td class="text-center imgUser">
+                <img src="${i.src}" class="img-fluid"/>
+                </td>
+                <td class="text-center">
+                ${i.name + " " + i.last_name}
+                </td>
+                <td class="tekst">
+                ${i.email}
+                </td>
+                <th class="text-center"><a href="">Edit</a></th>
+                <th class="text-center"><a href="">Delete</a></th>
+            </tr>`;
+            }
+        });
+        
     }
 }
  
