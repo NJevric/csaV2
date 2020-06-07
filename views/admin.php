@@ -63,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 mb-3">
         <div class="image d-flex justify-content-center">
