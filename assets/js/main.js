@@ -140,14 +140,14 @@ window.onload=function(){
 
     // CLIENTS
     if(url.indexOf("page=clients")!=-1){
-        function upisiVrednostiULs(data){
-            let idIgrac=data.map(x=>x.id_client);
-            localStorage.setItem("idIgrac",JSON.stringify(idIgrac));
-        }
-        function vratiVrednostIzLs(){
-            return JSON.parse(localStorage.getItem("idIgrac"));
+        // function upisiVrednostiULs(data){
+        //     let  =data.map(x=>x.id_client);
+        //     localStorage.setItem("idIgrac",JSON.stringify(idIgrac));
+        // }
+        // function vratiVrednostIzLs(){
+        //     return JSON.parse(localStorage.getItem("idIgrac"));
             
-        }
+        // }
         ajaxClients = (callbackSuccess,fileName) =>{
           $.ajax({
             url:"models/clients/"+fileName,
@@ -164,6 +164,7 @@ window.onload=function(){
             ajaxClients(
                 function(data){
                 clientsAll(data);
+                console.log(data);
                 },"clientsSelect.php"
             );
         })();
@@ -173,7 +174,11 @@ window.onload=function(){
             client.forEach(i => {
                 ispis+=singleClient(i);
             });
+            
             document.getElementById("clients").innerHTML=ispis;
+            if(client.length==0){
+                document.getElementById("clients").innerHTML="No such player";
+            }
         }
         
         singleClient = (i) => {
@@ -207,35 +212,7 @@ window.onload=function(){
         singleActiveLink = (i) => {
             return `<option value="${i.id_active}">${i.nameActive}</option>`;
         }
-      
-        document.getElementById("contractDdl").addEventListener("change",function(){
-            let active = $(this).val();
-           
-            $.ajax({
-                url:"models/clients/clientsFilter.php",
-                method:"get",
-                dataType:"json",
-                data:{
-                    active : active
-                },
-                success:function(data){
-                    
-                    console.log(active);
-                    
-                    let igrac=vratiVrednostIzLs();
-                    console.log(igrac);
-                            clientsAll(data);
-                            upisiVrednostiULs(data);
-                      
-                    
-                    
-                    
-                },
-                error:function(xhr){
-                    console.log(xhr);
-                }
-            });
-          });
+
 
 
         (function(){
@@ -243,51 +220,81 @@ window.onload=function(){
                 function(data){
                 console.log(data);
                 positionLinksAll(data);
-                let kliknuto = $(".position");
                 
-                kliknuto.change(function(){
-                    let cekirano = $(".position:checked");
+                document.getElementById("contractDdl").addEventListener("change",filter);
+                
+                function filter(){
+
+                    let active = $("#contractDdl").val();
+                    
+                    // let kliknuto = $(".position");
                     let nizCekirano = [];
-                   
+                    
+                    // kliknuto.change(function(){
+                    let cekirano = $(".position:checked");
+                    console.log(cekirano);
+                    
                     for(let i=0;i<cekirano.length;i++){
                         if(!nizCekirano.includes(cekirano[i].value)){
                             nizCekirano.push(cekirano[i].value);
                         }
-                        // if(nizCekirano.includes(cekirano[0]),value){
-                        //     $(".position").trigger("click");
-                        // }
                     }
+
                     if(nizCekirano.length==0){
                         nizCekirano.push(0);
                     }
-                   
+                    // });
+
                     $.ajax({
                         url:"models/clients/clientsFilter.php",
                         method:"post",
                         dataType:"json",
                         data:{
+                            submit : true,
+                            active : active,
                             position : nizCekirano
+        
                         },
                         success:function(data){
-                            let igrac=vratiVrednostIzLs();
-                            console.log(position);
-                            console.log(data);
-                           
-                            clientsAll(data);
-                            
-                            upisiVrednostiULs(igrac);
-                            
+                            clientsAll(data);  
                         },
                         error:function(xhr){
                             console.log(xhr);
-                            }
+                        }
                     });
-                })
+                }
+
+                let pozicije = document.getElementsByClassName("position");
+                for(let i of pozicije){
+                    i.addEventListener("change",function(e){
+                        e.preventDefault();
+                        filter();
+                    });
+                }  
+                    // $.ajax({
+                    //     url:"models/clients/clientsFilter.php",
+                    //     method:"post",
+                    //     dataType:"json",
+                    //     data:{
+                    //         position : nizCekirano
+                    //     },
+                    //     success:function(data){
+
+                    //         console.log(position);
+                    //         console.log(data);         
+                    //         clientsAll(data);   
+                    //     },
+                    //     error:function(xhr){
+                    //         console.log(xhr);
+                    //         }
+                    // });
+                // })
             },
                 "clientsPosition.php"
             );
         })();
 
+        
         positionLinksAll = (links) => {
             let ispis=`<label for="Select All">
             <input type="checkbox" name="chb" class="mr-2 position" id="0" value="0"/>Select All
@@ -304,6 +311,10 @@ window.onload=function(){
             <input type="checkbox" name="chb" class="mr-2 position" id="${i.id_position}" value="${i.id_position}"/>${i.name_position}
         </label>`;
         }
+        
+        
+        
+
 
 
 
@@ -733,9 +744,7 @@ if(url.indexOf("login.php")!=-1){
                 success:function(data){
                     console.log("sve je ok sa serverom");
                     console.log(data);
-                    clientsAdminAll(data);
-                    
-                    
+                    clientsAdminAll(data);     
                 },
                 error:function(xhr){
                     if(xhr.status==400){
@@ -749,32 +758,27 @@ if(url.indexOf("login.php")!=-1){
                     }
                 }
             });
-
+            
             clientsAdminAll = (data) => {
                 
                 let ispis=`<div class="row player">
                 <table class="table tableClients">
                   <tbody>
                     <tr>
-                      <th scope="row">ID</th>
-                      <th scope="row">Img</th>
-                      <th scope="row">Name</th>
-                      <th scope="row">Height</th>
-                      <th scope="row">Weight</th>
-                      <th scope="row">Position</th>
-                      <th scope="row">DOB</th>
-                      <th scope="row">Passport</th>
-                      <th scope="row">Team</th>
-                      <th scope="row">Active</th>
-                      <th scope="row">Edit</th>
-                      <th scope="row">Delete</th>
+                      <th scope="row" class="text-center">ID</th>
+                      <th scope="row" class="text-center">Img</th>
+                      <th scope="row" class="text-center">Name</th>
+                      <th scope="row" class="text-center">DOB</th>
+                      <th scope="row" class="text-center">Active</th>
+                      <th scope="row" class="text-center">Edit</th>
+                      <th scope="row" class="text-center">Delete</th>
                     </tr>`;
                 data.forEach(i => {
                    
                     ispis+=` 
                     <tr>
                       <td class="text-center">
-                        1
+                        ${i.id_client}
                       </td>
                       <td class="text-center imgClient">
                         <img src="../${i.src}" alt="${i.alt}" class="img-fluid"/>
@@ -782,33 +786,12 @@ if(url.indexOf("login.php")!=-1){
                       <td class="text-center">
                       ${i.first_name + " " + i.last_name}
                       </td>
-                      <td class="text-center">
-                      ${i.height}
-                      </td>
-                      <td class="text-center">
-                      ${i.weight}
-                      </td>
-                      <td class="text-center">
-                        ${i.position[0] + "/"+ i.position[1]} 
-                        
-                        </td>
-                     
-              
-                        
-                 
-                       
-                       
-                        
-               
-                    <td class="text-center">
+                
+                   <td class="text-center">
                       ${i.dob}
                       </td>
-                      <td class="text-center">
-                      ${i.country}
-                      </td>
-                      <td class="text-center">
-                      ${i.name}
-                      </td>
+                     
+                   
                       <td class="text-center">
                       ${i.free_agent}
                       </td>
@@ -826,9 +809,50 @@ if(url.indexOf("login.php")!=-1){
               </div>`
                 document.getElementById("prikaz").innerHTML=ispis;
             }
-
+            
+            
+            // position(24);
+            function position(id){
+                $.ajax({
+                    url: "../models/admin/clientPosition.php",
+                    method: "post",
+                    dataType: "json",
+                    data:{
+                        idJSON:id
+                    },
+                    success:function(data){
+                        // console.log("sve je ok sa serverom");
+                        // console.log(data);
+                        positionPrint(data);
+                    },
+                    error:function(xhr){
+                        if(xhr.status==400){
+    
+                        }
+                        if(xhr.status==500){
+                            alert(xhr.responseJSON.errorMsgServer);
+                        }
+                        else{
+                            console.log(xhr);
+                        }
+                    }
+                });
+             }
+             positionPrint = (data) => {
+                 let ispis="";
+                 data.forEach(i => {
+                     ispis+=i.name_position + "<br/>";
+                 });
+                 let pozicijaKlasa = document.getElementsByClassName("position");
+                 for(let i of pozicijaKlasa){
+                     i.innerHTML=ispis;
+                 }
+             }
            
         });
+       
+        
+        
 
         document.getElementById("postsAll").addEventListener("click",function(e){
             e.preventDefault();
@@ -885,7 +909,7 @@ if(url.indexOf("login.php")!=-1){
                 <td class="text-center">
                     ${i.id_news}
                 </td>
-                <td class="text-center">
+                <td class="text-center headline">
                 ${i.headline}
                 </td>
                 <td class="text-center">
@@ -902,6 +926,8 @@ if(url.indexOf("login.php")!=-1){
 
         document.getElementById("usersAll").addEventListener("click",function(e){
             e.preventDefault();
+            
+            printUsers = () => {
             $.ajax({
                 url: "../models/admin/usersAll.php",
                 method: "post",
@@ -913,6 +939,7 @@ if(url.indexOf("login.php")!=-1){
                     console.log("sve je ok sa serverom");
                     console.log(data);
                     usersAllAdmin(data);
+                    delteUser();
                 },
                 error:function(xhr){
                     if(xhr.status==400){
@@ -937,6 +964,7 @@ if(url.indexOf("login.php")!=-1){
                             <th scope="row">Image</th>
                             <th scope="row">Name</th>
                             <th scope="row">Email</th>
+                            <th scope="row">Role</th>
                             <th scope="row">Edit</th>
                             <th scope="row">Delete</th>
                         </tr>`;
@@ -961,14 +989,62 @@ if(url.indexOf("login.php")!=-1){
                 <td class="text-center">
                 ${i.name + " " + i.last_name}
                 </td>
-                <td class="tekst">
+                <td class="">
                 ${i.email}
                 </td>
-                <th class="text-center"><a href="">Edit</a></th>
-                <th class="text-center"><a href="">Delete</a></th>
+                <td class="">
+                ${i.role_name}
+                </td>
+                <th class="text-center"><a href="" data="edit">Edit</a></th>
+                <th class="text-center"><a href="" class="userDelete" data-id="${i.id_user}" >Delete</a></th>
             </tr>`;
             }
+            }
+            printUsers();
         });
+        // DELETE USER
+        
+        delteUser = () => {
+            let userDelete=document.getElementsByClassName("userDelete");
+            for(let i of userDelete){
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                    $.ajax({
+                        url: "../models/admin/deleteUser.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            clicked : dataId
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printUsers();
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+        
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    });
+                })
+            }
+        }
+       
+        // let userDelete = document.getElementById("userDelete");
+        
+            
+        // userDelete.dataset.delete.addEventListener("click",function(e){
+        //     e.preventDefault();
+        //     alert("jebi");
+        // });
         
     }
 }
