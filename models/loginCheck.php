@@ -24,13 +24,18 @@
     
         if($code!=422){
 
-            $queryLogin="SELECT * from person p INNER JOIN user u ON p.id_person=u.id_person INNER JOIN role r on u.id_role=r.id_role where email=? and password=?";
+            $queryLogin="SELECT * from person p INNER JOIN user u ON p.id_person=u.id_person INNER JOIN role r on u.id_role=r.id_role where email=? and password=? and u.id_role=?";
+            $idRole=3;
             $resultLogin=$conn->prepare($queryLogin);
             $password=md5($pass);
             
             $queryPass = "SELECT password FROM user WHERE password=?";
             $resultPass=$conn->prepare($queryPass);
             
+          
+            $queryRole = "SELECT id_role FROM user WHERE id_role IN (1,2) AND email=? and password=?";
+            $resultRole = $conn->prepare($queryRole);
+
             try{
                 
                 $resultPass->execute([$password]);
@@ -44,14 +49,21 @@
                     // $dolazniSajt='From:csasportsmanagement.com';
                     // mail($adresaprimaoca,$naslov,$sadrzajMail,$dolazniSajt);
                 }
-
+               
+                    $resultRole->execute([$email,$password]);
+                    if($resultRole->rowCount()==1){
+                        $code=201;  
+                    }
+                
+                
            
-                $resultLogin->execute([$email,$password]);
+                $resultLogin->execute([$email,$password,$idRole]);
                 if($resultLogin->rowCount()==1){
                     $user=$resultLogin->fetch(); 
                     $_SESSION['admin']=$user;  
                     $code=200;      
                 }
+               
                 
             }
             catch(PDOException $e){
