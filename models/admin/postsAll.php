@@ -6,7 +6,7 @@ $error["errorMsg"]=['An error has ocured, bad request'];
 $code=400;
 
 if(isset($_POST['clicked'])){
-    $queryNews="SELECT * FROM news n INNER JOIN news_date nd ON n.id_news_date=nd.id_news_date ORDER BY date DESC";
+    $queryNews="SELECT * FROM news ORDER BY date DESC";
     $resultNews = executeQuery($queryNews);
     $code=200;
 }

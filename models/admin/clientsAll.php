@@ -6,7 +6,7 @@ $error["errorMsg"]=['An error has ocured, bad request'];
 $code=400;
 
 if(isset($_POST["clicked"])){
-    $queryClient="SELECT c.id_client, pe.name AS first_name,pe.last_name,c.dob,a.free_agent,pimg.src,pimg.alt FROM client c INNER JOIN client_club cc ON c.id_client=cc.id_client INNER JOIN club cl ON cc.id_club=cl.id_club  INNER JOIN active a ON a.id_active=c.id_active INNER JOIN person pe ON pe.id_person=c.id_person INNER JOIN person_img pimg ON pe.id_person=pimg.id_person";
+    $queryClient="SELECT c.id_client, pe.name AS first_name,pe.last_name,c.dob,a.free_agent,pimg.src,pimg.alt FROM client c INNER JOIN client_club cc ON c.id_client=cc.id_client INNER JOIN club cl ON cc.id_club=cl.id_club  INNER JOIN active a ON a.id_active=c.id_active INNER JOIN person pe ON pe.id_person=c.id_person INNER JOIN person_img pimg ON pe.id_person_img=pimg.id_person_img";
     $resultClient=executeQuery($queryClient);
     $code=200;
     // p.name_position AS position,
