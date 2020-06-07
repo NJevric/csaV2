@@ -57,7 +57,7 @@ if(isset($_POST['clicked'])){
     }
     if($code!=422){ 
 
-        $queryRegister="INSERT INTO person VALUES(NULL,?,?)";
+        $queryRegister="INSERT INTO person VALUES(NULL,?,?,1)";
         $resultRegister=$conn->prepare($queryRegister);
         
         try{
