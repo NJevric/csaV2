@@ -554,13 +554,20 @@ if(url.indexOf("login.php")!=-1){
                 success:function(data){
                     console.log("sve je ok sa serverom");
                     console.log(data);
-                    // if(status==200){
-                        window.location='../views/admin.php';
+                    // if(data.status==200){
+                    window.location='../views/admin.php';
                     // }
                     
                     
                 },
                 error:function(xhr){
+                    // if(xhr.status==200){
+                    //     window.location='../views/admin.php';
+                    // }
+                    if(xhr.status==201){
+                        window.location='../index.php';
+                        console.log(xhr);
+                    }
                     if(xhr.status==422){
                         // if(xhr.responseJSON.errorEmail){
                         //     console.log(xhr.responseJSON.errorEmail);
@@ -708,6 +715,7 @@ if(url.indexOf("login.php")!=-1){
     // ADMIN PANEL
     if(url.indexOf("admin.php")!=-1){
         
+        // LOGOUT
         document.getElementById("logout").addEventListener("click",function(e){
             e.preventDefault();
             $.ajax({
@@ -732,98 +740,284 @@ if(url.indexOf("login.php")!=-1){
             });
         });
 
+        // CLIENTS
         document.getElementById("allClients").addEventListener("click",function(e){
-            e.preventDefault();
-            $.ajax({
-                url: "../models/admin/clientsAll.php",
-                method: "post",
-                dataType: "json",
-                data:{
-                    clicked : true
-                },
-                success:function(data){
-                    console.log("sve je ok sa serverom");
-                    console.log(data);
-                    clientsAdminAll(data);     
-                },
-                error:function(xhr){
-                    if(xhr.status==400){
+            printClients = () => {
 
-                    }
-                    if(xhr.status==500){
-                        alert(xhr.responseJSON.errorMsgServer);
-                    }
-                    else{
-                        console.log(xhr);
-                    }
-                }
-            });
-            
-            clientsAdminAll = (data) => {
-                
-                let ispis=`<div class="row player">
-                <table class="table tableClients">
-                  <tbody>
-                    <tr>
-                      <th scope="row" class="text-center">ID</th>
-                      <th scope="row" class="text-center">Img</th>
-                      <th scope="row" class="text-center">Name</th>
-                      <th scope="row" class="text-center">DOB</th>
-                      <th scope="row" class="text-center">Active</th>
-                      <th scope="row" class="text-center">Edit</th>
-                      <th scope="row" class="text-center">Delete</th>
-                    </tr>`;
-                data.forEach(i => {
-                   
-                    ispis+=` 
-                    <tr>
-                      <td class="text-center">
-                        ${i.id_client}
-                      </td>
-                      <td class="text-center imgClient">
-                        <img src="../${i.src}" alt="${i.alt}" class="img-fluid"/>
-                      </td>
-                      <td class="text-center">
-                      ${i.first_name + " " + i.last_name}
-                      </td>
-                
-                   <td class="text-center">
-                      ${i.dob}
-                      </td>
-                     
-                   
-                      <td class="text-center">
-                      ${i.free_agent}
-                      </td>
-                      <td class="text-center">
-                        <a href="">Edit</a>
-                      </td>
-                      <td class="text-center">
-                        <a href="">Delete</a>
-                      </td>
-                    </tr>
-                  `;
-                });
-                ispis+=`</tbody>               
-                </table>              
-              </div>`
-                document.getElementById("prikaz").innerHTML=ispis;
-            }
-            
-            
-            // position(24);
-            function position(id){
+                e.preventDefault();
                 $.ajax({
-                    url: "../models/admin/clientPosition.php",
+                    url: "../models/admin/clientsAll.php",
                     method: "post",
                     dataType: "json",
                     data:{
-                        idJSON:id
+                        clicked : true
                     },
                     success:function(data){
-                        // console.log("sve je ok sa serverom");
-                        // console.log(data);
-                        positionPrint(data);
+                        console.log("sve je ok sa serverom");
+                        console.log(data);
+                        clientsAdminAll(data);  
+                        deleteClient();   
+                    },
+                    error:function(xhr){
+                        if(xhr.status==400){
+
+                        }
+                        if(xhr.status==500){
+                            alert(xhr.responseJSON.errorMsgServer);
+                        }
+                        else{
+                            console.log(xhr);
+                        }
+                    }
+                });
+                
+                clientsAdminAll = (data) => {
+                    
+                    let ispis=`<div class="row player">
+                    <table class="table tableClients">
+                    <tbody>
+                        <tr>
+                        <th scope="row" class="text-center">ID</th>
+                        <th scope="row" class="text-center">Img</th>
+                        <th scope="row" class="text-center">Name</th>
+                        <th scope="row" class="text-center">Active</th>
+                        <th scope="row" class="text-center">Edit</th>
+                        <th scope="row" class="text-center">Delete</th>
+                        </tr>`;
+                    data.forEach(i => {
+                    
+                        ispis+=` 
+                        <tr>
+                        <td class="text-center">
+                            ${i.id_client}
+                        </td>
+                        <td class="text-center imgClient">
+                            <img src="../${i.src}" alt="${i.alt}" class="img-fluid"/>
+                        </td>
+                        <td class="text-center">
+                        ${i.first_name + " " + i.last_name}
+                        </td>
+                    
+                    
+                        
+                    
+                        <td class="text-center">
+                        ${i.free_agent}
+                        </td>
+                        <td class="text-center">
+                            <a href="">Edit</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="" class="clientDelete" data-id="${i.id_client}">Delete</a>
+                        </td>
+                        </tr>
+                    `;
+                    });
+                    ispis+=`</tbody>               
+                    </table>              
+                </div>`
+                    document.getElementById("prikaz").innerHTML=ispis;
+                }
+               
+            }
+            printClients();
+            
+            // position(24);
+            // function position(id){
+            //     $.ajax({
+            //         url: "../models/admin/clientPosition.php",
+            //         method: "post",
+            //         dataType: "json",
+            //         data:{
+            //             idJSON:id
+            //         },
+            //         success:function(data){
+            //             // console.log("sve je ok sa serverom");
+            //             // console.log(data);
+            //             positionPrint(data);
+            //         },
+            //         error:function(xhr){
+            //             if(xhr.status==400){
+    
+            //             }
+            //             if(xhr.status==500){
+            //                 alert(xhr.responseJSON.errorMsgServer);
+            //             }
+            //             else{
+            //                 console.log(xhr);
+            //             }
+            //         }
+            //     });
+            //  }
+            //  positionPrint = (data) => {
+            //      let ispis="";
+            //      data.forEach(i => {
+            //          ispis+=i.name_position + "<br/>";
+            //      });
+            //      let pozicijaKlasa = document.getElementsByClassName("position");
+            //      for(let i of pozicijaKlasa){
+            //          i.innerHTML=ispis;
+            //      }
+            //  }
+           
+        });
+        // CLIENT DELETE
+        deleteClient = () => {
+            let userDelete=document.getElementsByClassName("clientDelete");
+            for(let i of userDelete){
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                    $.ajax({
+                        url: "../models/admin/clientDelete.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            clicked : dataId
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printClients();
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+        
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    });
+                })
+            }
+        }
+        
+        // POSTS 
+
+        document.getElementById("postsAll").addEventListener("click",function(e){
+            e.preventDefault();
+            printNews = () => {
+                    $.ajax({
+                    url: "../models/admin/postsAll.php",
+                    method: "post",
+                    dataType: "json",
+                    data:{
+                        clicked : true
+                    },
+                    success:function(data){
+                        console.log("sve je ok sa serverom");
+                        console.log(data);
+                        postsAllAdmin(data);
+                        editNews();
+                        delteNews();
+                    },
+                    error:function(xhr){
+                        if(xhr.status==400){
+
+                        }
+                        if(xhr.status==500){
+                            alert(xhr.responseJSON.errorMsgServer);
+                        }
+                        else{
+                            console.log(xhr);
+                        }
+                    }
+                });
+
+                postsAllAdmin = (data) => {
+                    let ispis=`
+                    <div class="row player">
+                        <table class="table tableClients">
+                        <tbody>
+                            <tr>
+                                <th scope="row">ID</th>
+                                <th scope="row">Headline</th>
+                                <th scope="row">Date</th>
+                                <th scope="row">Text</th>
+                                <th scope="row">Edit</th>
+                                <th scope="row">Delete</th>
+                            </tr>`;
+                        data.forEach(i => {
+                            ispis+=printSingleNewsAdmin(i);
+                        });
+            
+                    ispis+=`</tbody>               
+                    </table>              
+                </div>`
+                document.getElementById("prikaz").innerHTML=ispis;
+                }
+                printSingleNewsAdmin = (i) => {
+                    return `
+                    <tr>
+                    <td class="text-center">
+                        ${i.id_news}
+                    </td>
+                    <td class="text-center headline">
+                    ${i.headline}
+                    </td>
+                    <td class="text-center">
+                    ${i.date}
+                    </td>
+                    <td class="tekst">
+                    ${i.text}
+                    </td>
+                    <th class="text-center"><a href="" class="postEdit" data-id="${i.id_news}">Edit</a></th>
+                    <th class="text-center"><a href="" class="postDelete" data-id="${i.id_news}">Delete</a></th>
+                </tr>`;
+                }
+            }
+            printNews();
+        });
+        // INSERT POST
+        document.getElementById("addPost").addEventListener("click",function(e){
+            e.preventDefault();
+            printFormInsertPost = () => {
+                let ispis=`
+                    <h2 class="naslovAdmin">Add Post</h2>
+                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5">
+                
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Headline</label>
+                            <input type="text" class="form-control" id="headline" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Date</label>
+                            <input type="date" class="form-control" id="date" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Post Content</label>
+                            <textarea class="form-control" id="text" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary col-12 btnEditPost" id="btnInsertPost">Edit Post</button>
+                        <input type="hidden" id="btnId" value=""/>
+                    </form>`
+                
+                
+                document.getElementById("prikaz").innerHTML=ispis;
+            }
+            printFormInsertPost();
+            document.getElementById("btnInsertPost").addEventListener("click",function(){
+
+                let headline=document.getElementById("headline").value;
+                let date=document.getElementById("date").value;
+                let text=document.getElementById("text").value;
+                $.ajax({
+                    url: "../models/admin/insertPost.php",
+                    method: "post",
+                    dataType: "json",
+                    data:{
+                        headline : headline,
+                        date : date,
+                        text : text,
+                        clicked : true
+                    },
+                    success:function(data){
+                        console.log("sve je ok sa serverom");
+                        
                     },
                     error:function(xhr){
                         if(xhr.status==400){
@@ -836,94 +1030,141 @@ if(url.indexOf("login.php")!=-1){
                             console.log(xhr);
                         }
                     }
-                });
-             }
-             positionPrint = (data) => {
-                 let ispis="";
-                 data.forEach(i => {
-                     ispis+=i.name_position + "<br/>";
-                 });
-                 let pozicijaKlasa = document.getElementsByClassName("position");
-                 for(let i of pozicijaKlasa){
-                     i.innerHTML=ispis;
-                 }
-             }
-           
+                })
+            });
         });
+
+        //  EDIT NEWS
+        editNews = () =>{
+            let editNews = document.getElementsByClassName("postEdit");
+            for(let i of editNews){
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                    $.ajax({
+                        url: "../models/admin/editNews.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            clicked : dataId
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printFormEditNews(data);
+                            updatePost();
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+    
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    });
+
+                    printFormEditNews = (data) => {
+                       
+                            ispis=`
+                            <h2 class="naslovAdmin">Edit Post</h2>
+                                <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5">
+                        
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Headline</label>
+                                    <input type="text" class="form-control" id="headline" value="${data.headline}">
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Post Content</label>
+                                    <textarea class="form-control" id="text" rows="3">${data.text}</textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary col-12 btnEditPost" id="btnEditPost">Edit Post</button>
+                                <input type="hidden" id="btnId" value="${data.id_news}"/>
+                            </form>`
+                        
+                        
+                        document.getElementById("prikaz").innerHTML=ispis;
+
+                    }
+                });
+            }
+            updatePost = () =>{
+                document.getElementById("btnEditPost").addEventListener("click",function(e){
+                    // e.preventDefault();
+                    let headline = document.getElementById("headline").value;
+                    let text = document.getElementById("text").value;
+                    let id = document.getElementById("btnId").value;
+                    $.ajax({
+                        url: "../models/admin/updatePost.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            headline : headline,
+                            text : text,
+                            clicked : id
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            alert("Editing Post Success");
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+    
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    })
+                });
+            }
+            
+        }
        
         
+        // DELETE NEWS
+        delteNews = () => {
+            let userDelete=document.getElementsByClassName("postDelete");
+            for(let i of userDelete){
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                    $.ajax({
+                        url: "../models/admin/newsDelete.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            clicked : dataId
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printNews();
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
         
-
-        document.getElementById("postsAll").addEventListener("click",function(e){
-            e.preventDefault();
-            $.ajax({
-                url: "../models/admin/postsAll.php",
-                method: "post",
-                dataType: "json",
-                data:{
-                    clicked : true
-                },
-                success:function(data){
-                    console.log("sve je ok sa serverom");
-                    console.log(data);
-                    postsAllAdmin(data);
-                },
-                error:function(xhr){
-                    if(xhr.status==400){
-
-                    }
-                    if(xhr.status==500){
-                        alert(xhr.responseJSON.errorMsgServer);
-                    }
-                    else{
-                        console.log(xhr);
-                    }
-                }
-            });
-
-            postsAllAdmin = (data) => {
-                let ispis=`
-                <div class="row player">
-                    <table class="table tableClients">
-                    <tbody>
-                        <tr>
-                            <th scope="row">ID</th>
-                            <th scope="row">Headline</th>
-                            <th scope="row">Date</th>
-                            <th scope="row">Text</th>
-                            <th scope="row">Edit</th>
-                            <th scope="row">Delete</th>
-                        </tr>`;
-                    data.forEach(i => {
-                        ispis+=printSingleNewsAdmin(i);
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
                     });
-           
-                ispis+=`</tbody>               
-                </table>              
-              </div>`
-            document.getElementById("prikaz").innerHTML=ispis;
+                })
             }
-            printSingleNewsAdmin = (i) => {
-                return `
-                 <tr>
-                <td class="text-center">
-                    ${i.id_news}
-                </td>
-                <td class="text-center headline">
-                ${i.headline}
-                </td>
-                <td class="text-center">
-                ${i.date}
-                </td>
-                <td class="tekst">
-                ${i.text}
-                </td>
-                <th class="text-center"><a href="">Edit</a></th>
-                <th class="text-center"><a href="">Delete</a></th>
-            </tr>`;
-            }
-        });
+        }
 
+        // USERS
         document.getElementById("usersAll").addEventListener("click",function(e){
             e.preventDefault();
             
@@ -1002,8 +1243,9 @@ if(url.indexOf("login.php")!=-1){
             }
             printUsers();
         });
-        // DELETE USER
+  
         
+        // DELETE USER
         delteUser = () => {
             let userDelete=document.getElementsByClassName("userDelete");
             for(let i of userDelete){
