@@ -7,16 +7,14 @@ $code=400;
 
 if(isset($_POST['clicked'])){
 
-    $headline=$_POST['headline'];
-    $date=$_POST['date'];
-    $text=$_POST['text'];
+    $country=$_POST['country'];
  
     try{
 
-        $queryNewsInsert="INSERT INTO news VALUES(NULL,?,?,?)";
-        $resultNewsInsert=$conn->prepare($queryNewsInsert);
+        $queryPassInsert="INSERT INTO country VALUES(NULL,?)";
+        $resultPassInsert=$conn->prepare($queryPassInsert);
         
-        if($resultNewsInsert->execute([$headline,$text,$date])){
+        if($resultPassInsert->execute([$country])){
             $code=201;
         }
         else{
@@ -29,7 +27,7 @@ if(isset($_POST['clicked'])){
     }
     
 }
-echo json_encode($resultNewsInsert);
+echo json_encode($resultPassInsert);
 // echo json_encode($error);
 http_response_code($code);
 ?>
