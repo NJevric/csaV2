@@ -3,7 +3,7 @@
 header("Content-type: application/json");
 require_once("../../config/connection.php");
 // $error["errorMsg"]=['An error has ocured, bad request'];
-$code=200;
+$code=400;
 
 if(isset($_POST['clicked'])){
 

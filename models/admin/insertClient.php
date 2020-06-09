@@ -72,7 +72,7 @@ if(isset($_POST['clicked'])){
         }
         // move_uploaded_file($tmpName, $location.$fileName);
     }
-    // try{
+    try{
         $queryPersonInsert="INSERT INTO person VALUES(NULL,?,?,?)";
         $resultPersonInsert=$conn->prepare($queryPersonInsert);
 
@@ -142,11 +142,11 @@ if(isset($_POST['clicked'])){
         }
         
         
-    // }
-    // catch(PDOException $e){
-    //     $error["errorMsgServer"]=["An error has occurred with server"];
-    //     $code=500;
-    // }
+    }
+    catch(PDOException $e){
+        $error["errorMsgServer"]=["An error has occurred with server"];
+        $code=500;
+    }
     
 }
 $niz=[$resultInsertImg,$resultPersonInsert,$resultClientInsert,$resultClientPosition,$resultClientPassport];

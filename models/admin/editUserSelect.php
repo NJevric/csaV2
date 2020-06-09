@@ -11,12 +11,12 @@ if(isset($_POST['clicked'])){
 
     try{
 
-        $queryNews="SELECT * FROM person p INNER JOIN user u ON p.id_person=u.id_person WHERE u.id_user=?";
-        $resultNews=$conn->prepare($queryNews);
+        $queryUser="SELECT * FROM person p INNER JOIN user u ON p.id_person=u.id_person WHERE u.id_user=?";
+        $resultUser=$conn->prepare($queryUser);
         
-        if($resultNews->execute([$id])){
+        if($resultUser->execute([$id])){
             $code=200;
-            $resultNews=$resultNews->fetch();
+            $resultUser=$resultUser->fetch();
         }
         else{
             $code=422;
@@ -28,6 +28,6 @@ if(isset($_POST['clicked'])){
     }
     
 }
-echo json_encode($resultNews);
+echo json_encode($resultUser);
 http_response_code($code);
 ?>
