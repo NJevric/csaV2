@@ -757,6 +757,8 @@ if(url.indexOf("login.php")!=-1){
                         console.log("sve je ok sa serverom");
                         console.log(data);
                         clientsAdminAll(data);  
+                        addTeam();
+                        editClient();
                         deleteClient();   
                     },
                     error:function(xhr){
@@ -808,7 +810,10 @@ if(url.indexOf("login.php")!=-1){
                         ${i.free_agent}
                         </td>
                         <td class="text-center">
-                            <a href="">Edit</a>
+                            <a href="" class="clientTeam" data-id="${i.id_client}">Add New Team</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="" class="clientEdit" data-id="${i.id_client}">Edit</a>
                         </td>
                         <td class="text-center">
                             <a href="" class="clientDelete" data-id="${i.id_client}">Delete</a>
@@ -864,10 +869,90 @@ if(url.indexOf("login.php")!=-1){
             //  }
            
         });
+        // ADD NEW TEAM
+        addTeam = () => {
+            let clientTeam = document.getElementsByClassName("clientTeam");
+            for(let i of clientTeam){
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                  
+                    $.ajax({
+                        url: "../models/admin/addClientTeam.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            team : team,
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printFormAddTeam(data);
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+        
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    });
+                   
+                })
+                printFormAddTeam = (data) => {
+                   let ispis=` <h2 class="naslovAdmin">New Client Club</h2>
+                   <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5" enctype="multipart/form-data">
+                    <div class="form-group col-12">
+                        <label for="exampleFormControlTextarea1">Team</label>
+                        <select class="form-control form-control-md" id="team">
+                                
+                        </select>
+                    </div>
+                       
+                    <button type="submit" class="btn btn-primary col-12" id="btnEditClient">Edit Client</button>
+                        <input type="hidden" id="btnId" value="${data.id_client}"/>
+                    </form>`;
+                   document.getElementById("prikaz").innerHTML=ispis;
+
+                   $.ajax({
+                    url: "../models/admin/selectClub.php",
+                    method: "post",
+                    dataType: "json",
+                    success:function(data){
+                        console.log("sve je ok sa serverom");
+                        teamLinks(data);
+                    },
+                    error:function(xhr){
+                        console.log(xhr);
+                    }
+                    
+                    })
+                    teamLinks = (links) => {
+                        let ispis=`<option value="0">Seelct Team</option>`;
+                        links.forEach(i=>{
+                           
+                    
+                                ispis+=singleTeam(i);
+                            
+                        });
+                        document.getElementById("team").innerHTML=ispis;
+                    }
+            
+                    singleTeam = (i) => {
+                        return `<option value="${i.id_club}">${i.name}</option>`;
+                    }
+                }
+     
+            }
+        }
         // CLIENT DELETE
         deleteClient = () => {
-            let userDelete=document.getElementsByClassName("clientDelete");
-            for(let i of userDelete){
+            let clientDelete=document.getElementsByClassName("clientDelete");
+            for(let i of clientDelete){
                 i.addEventListener("click",function(e){
                     e.preventDefault();
                     let dataId = this.dataset.id;
@@ -897,11 +982,220 @@ if(url.indexOf("login.php")!=-1){
                     });
                 })
             }
+          
         }
+        // EDIT CLIENT
+        editClient = () => {
+           
+            let clientEdit = document.getElementsByClassName("clientEdit");
+            for(let i of clientEdit){
+                let podaci = "";
+                i.addEventListener("click",function(e){
+                    e.preventDefault();
+                    let dataId = this.dataset.id;
+                    $.ajax({
+                        url: "../models/admin/editClientSelect.php",
+                        method: "post",
+                        dataType: "json",
+                        data:{
+                            clicked : dataId
+                        },
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            console.log(data);
+                            printEditForm(data);
+                            updateClient();
+                            podaci=data;
+                            console.log(data.id_active);
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+    
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    });
+                    printEditForm = (data) => {
+                        let ispis=`
+                    <h2 class="naslovAdmin">Edit Client</h2>
+                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="exampleInputEmail1">First Name</label>
+                                <input type="text" class="form-control" id="firstName" value="${data.name}">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="exampleInputEmail1">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" value="${data.last_name}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">Height</label>
+                                <input type="text" class="form-control" id="height" value="${data.height}">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">Weight</label>
+                                <input type="text" class="form-control" id="weight" value="${data.weight}">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">DOB</label>
+                                <input type="date" class="form-control" id="dob" value="${data.dob}">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">Active</label>
+                                <select class="form-control form-control-md" id="active">
+                                        
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">Team</label>
+                                <select class="form-control form-control-md" id="team">
+                                        
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="exampleFormControlTextarea1">Contract Signing</label>
+                                <input type="date" class="form-control" id="contract" value="${data.dateContract}">
+                            </div>
+                        </div>
+                     
+                        <div class="form-group col-6">
+                                <label for="exampleInputEmail1">Player Img</label>
+                                <input type="file" class="form-control-file" id="clientImg">
+                            </div>
+                        <button type="submit" class="btn btn-primary col-12" id="btnEditClient">Edit Client</button>
+                        <input type="hidden" id="btnId" value="${data.id_client}"/>
+                    </form>`
+                        
+                    
+                    document.getElementById("prikaz").innerHTML=ispis;
+                
+
+
+                    $.ajax({
+                        url: "../models/clients/clientsActive.php",
+                        method: "post",
+                        dataType: "json",
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            activeLinksAll(data);
+                        },
+                        error:function(xhr){
+                            console.log(xhr);
+                        }
+                    })
+            
+                    activeLinksAll = (links) => {
+                        let ispis=`<option value="0">Employment Status</option>`;
+                        links.forEach(i=>{
+                            if(i.id_active==podaci.id_active){
+                                ispis+=`<option value="${i.id_active}" selected>${i.nameActive}</option>`;
+                            }
+                            else{
+                                ispis+=singleActiveLink(i);
+                            }
+                        });
+                        document.getElementById("active").innerHTML=ispis;
+                    }
+            
+                    singleActiveLink = (i) => {
+                        return `<option value="${i.id_active}">${i.nameActive}</option>`;
+                    }
+
+
+                    $.ajax({
+                        url: "../models/admin/selectClub.php",
+                        method: "post",
+                        dataType: "json",
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            teamLinks(data);
+                        },
+                        error:function(xhr){
+                            console.log(xhr);
+                        }
+                    })
+            
+                    teamLinks = (links) => {
+                        let ispis=`<option value="0">Seelct Team</option>`;
+                        links.forEach(i=>{
+                            if(i.id_club==podaci.id_club){
+                                ispis+=`<option value="${i.id_active}" selected>${i.name}</option>`;
+                            }
+                            else{
+                                ispis+=singleTeam(i);
+                            }
+                        });
+                        document.getElementById("team").innerHTML=ispis;
+                    }
+            
+                    singleTeam = (i) => {
+                        return `<option value="${i.id_club}">${i.name}</option>`;
+                    }
+               
+                }
+               
+            }) 
+            updateClient = () => {
+                document.getElementById("btnEditClient").addEventListener("click",function(e){
+                    e.preventDefault();
+                    let formData = new FormData();
+                    formData.append("idClient",document.getElementById("btnId").value);
+                    formData.append("firstName",document.getElementById("firstName").value);
+                    formData.append("lastName",document.getElementById("lastName").value);
+                    formData.append("height",document.getElementById("height").value);
+                    formData.append("weight",document.getElementById("weight").value);
+                    formData.append("dob",document.getElementById("dob").value);
+                    formData.append("active",document.getElementById("active").value);
+                    formData.append("contract",document.getElementById("contract").value);
+                    formData.append("team",document.getElementById("team").value);
+                    formData.append("clientImg",document.getElementById("clientImg").files[0]);
+                    formData.append("clicked",true);
+                    $.ajax({
+                        url: "../models/admin/updateClient.php",
+                        method: "post",
+                        dataType: "json",
+                        data:formData,
+                        contentType:false,
+                        processData:false,
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            alert("Editing Client Success");
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+    
+                            }
+                            if(xhr.status==500){
+                                alert(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    })
+                });
+            }
+           
+        }
+    }
         // INSERT CLIENT
         document.getElementById("addClient").addEventListener("click",function(e){
             e.preventDefault();
-            printForminsertPassport = () => {
+            printForminsertClient = () => {
                 let ispis=`
                     <h2 class="naslovAdmin">Add Client</h2>
                         <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5" enctype="multipart/form-data">
@@ -1094,7 +1388,7 @@ if(url.indexOf("login.php")!=-1){
                     return `<option value="${i.id_club}">${i.name}</option>`;
                 }
             }
-            printForminsertPassport();
+            printForminsertClient();
             document.getElementById("btnInsertClient").addEventListener("click",function(e){
                 e.preventDefault();
                 let formData = new FormData();
@@ -1137,7 +1431,7 @@ if(url.indexOf("login.php")!=-1){
                 })
             });
         });
-       
+    
         // ADD PASSPORT
         document.getElementById("addPassport").addEventListener("click",function(e){
             e.preventDefault();
@@ -1601,11 +1895,6 @@ if(url.indexOf("login.php")!=-1){
             updateUser = () =>{
                 document.getElementById("btnEditUser").addEventListener("click",function(e){
                     e.preventDefault();
-                    // let firstName = document.getElementById("firstName").value;
-                    // let lastName = document.getElementById("lastName").value;
-                    // let userImg = document.getElementById("userImg").value;
-                    // let email = document.getElementById("email").value;
-                    // let id = document.getElementById("btnId").value;
                     let formData = new FormData();
                     formData.append("userImg",document.getElementById("userImg").files[0]);
                     formData.append("firstName",document.getElementById("firstName").value);
