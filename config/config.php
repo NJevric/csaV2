@@ -1,13 +1,14 @@
 <?php
 
-// Osnovna podesavanja
 define("BASE_URL", "http://localhost/csa-beta");
 define("ABSOLUTE_PATH", $_SERVER["DOCUMENT_ROOT"]."/csa-beta");
 
 
 define("ENV_FAJL", ABSOLUTE_PATH."/config/.env");
+define("ERR_FAJL", ABSOLUTE_PATH."/data/error_log.txt");
+define("LOG_FAJL", ABSOLUTE_PATH."/data/log.txt");
 
-//baza
+
 define("SERVER", env("SERVER"));
 define("DATABASE", env("DBNAME"));
 define("USERNAME", env("USERNAME"));
