@@ -405,8 +405,6 @@ window.onload=function(){
         let regEmail=/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let greske =[];
     
-        
-        
        if(!name.match(regName)){
             if(name == ""){
                 error[0].innerHTML="Name filed is mandatory";
@@ -484,18 +482,41 @@ window.onload=function(){
                 },
                 success:function(data){
                     console.log(data);
-                    // form.reset();
-                    // window.location="index.php?page=contact";
-                    // console.log("cao");
-                    // $("#restart").trigger("click");
-                  
                 },
-                error:function(status){
-                    console.log(status);
+                error:function(xhr){
+                    if(xhr.status==422){
+                        if(xhr.responseJSON.errorName){
+                            console.log(xhr.responseJSON.errorName);
+                            document.getElementById("errorName").innerHTML=xhr.responseJSON.errorName;
+                            stilGreskaBordura("name");
+                        
+                        }
+                        if(xhr.responseJSON.errorSubject){
+                            console.log(xhr.responseJSON.errorSubject);
+                            document.getElementById("errorSubject").innerHTML=xhr.responseJSON.errorSubject;
+                            stilGreskaBordura("subject");
+                        
+                        }
+                        if(xhr.responseJSON.errorEmail){
+                            console.log(xhr.responseJSON.errorEmail);
+                            document.getElementById("errorEmail").innerHTML=xhr.responseJSON.errorEmail;
+                            stilGreskaBordura("emailContact");
+                        
+                        }
+                        if(xhr.responseJSON.errorText){
+                            console.log(xhr.responseJSON.errorText);
+                            document.getElementById("errorText").innerHTML=xhr.responseJSON.errorText;
+                            stilGreskaBordura("text");
+                        }
+                    }
+                    if(xhr.status==500){
+                        console.log(xhr.responseJSON.errorMsg);
+                    }
+                    else{
+                        console.log(xhr);
+                    }
                 }
-               }); 
-               
-                
+               });  
            return true;
        }
     });
@@ -553,29 +574,20 @@ if(url.indexOf("login.php")!=-1){
                     clicked : true
                 },
                 success:function(data){
-                    console.log("sve je ok sa serverom");
-                    console.log(data);
-                    // if(data.status==200){
-                    window.location='../views/admin.php';
-                    // }
-                    
-                    
+                    window.location='../views/admin.php'; 
                 },
                 error:function(xhr){
-                    // if(xhr.status==200){
-                    //     window.location='../views/admin.php';
-                    // }
                     if(xhr.status==201){
                         window.location='../index.php';
                         console.log(xhr);
                     }
                     if(xhr.status==422){
-                        // if(xhr.responseJSON.errorEmail){
-                        //     console.log(xhr.responseJSON.errorEmail);
-                        //     document.getElementById("errorEmail").innerHTML=xhr.responseJSON.errorEmail;
-                        //     stilGreskaBordura("passLog");
+                        if(xhr.responseJSON.errorEmail){
+                            console.log(xhr.responseJSON.errorEmail);
+                            document.getElementById("errorEmail").innerHTML=xhr.responseJSON.errorEmail;
+                            stilGreskaBordura("usernameLog");
                         
-                        // }
+                        }
                         if(xhr.responseJSON.errorPass){
                             console.log(xhr.responseJSON.errorPass);
                             document.getElementById("errorPass").innerHTML=xhr.responseJSON.errorPass;
@@ -583,8 +595,7 @@ if(url.indexOf("login.php")!=-1){
                         }
                     }
                     if(xhr.status==500){
-                        console.log(xhr);
-                        alert(xhr.responseJSON.errorMsg);
+                        console.log(xhr.responseJSON.errorMsg);
                     }
                     else{
                         console.log(xhr);
@@ -678,9 +689,7 @@ if(url.indexOf("login.php")!=-1){
                     console.log("sve je ok sa serverom");
                     console.log(data);
                     window.location='login.php';
-                    // if(data.status==200){
-                        document.getElementById("success").innerHTML=data.responseJSON.success;
-                    // }
+                    document.getElementById("success").innerHTML=data.responseJSON.success;
                 },
                 error:function(xhr){
                    if(xhr.status==422){
@@ -702,7 +711,7 @@ if(url.indexOf("login.php")!=-1){
                         }
                    }
                    if(xhr.status==500){
-                        alert(xhr.responseJSON.errorMsg);
+                        console.log(xhr.responseJSON.errorMsg);
                    }
                    else{
                     console.log(xhr);
@@ -829,44 +838,6 @@ if(url.indexOf("login.php")!=-1){
                
             }
             printClients();
-            
-            // position(24);
-            // function position(id){
-            //     $.ajax({
-            //         url: "../models/admin/clientPosition.php",
-            //         method: "post",
-            //         dataType: "json",
-            //         data:{
-            //             idJSON:id
-            //         },
-            //         success:function(data){
-            //             // console.log("sve je ok sa serverom");
-            //             // console.log(data);
-            //             positionPrint(data);
-            //         },
-            //         error:function(xhr){
-            //             if(xhr.status==400){
-    
-            //             }
-            //             if(xhr.status==500){
-            //                 alert(xhr.responseJSON.errorMsgServer);
-            //             }
-            //             else{
-            //                 console.log(xhr);
-            //             }
-            //         }
-            //     });
-            //  }
-            //  positionPrint = (data) => {
-            //      let ispis="";
-            //      data.forEach(i => {
-            //          ispis+=i.name_position + "<br/>";
-            //      });
-            //      let pozicijaKlasa = document.getElementsByClassName("position");
-            //      for(let i of pozicijaKlasa){
-            //          i.innerHTML=ispis;
-            //      }
-            //  }
            
         });
         // ADD NEW TEAM
@@ -876,18 +847,19 @@ if(url.indexOf("login.php")!=-1){
                 i.addEventListener("click",function(e){
                     e.preventDefault();
                     let dataId = this.dataset.id;
-                  
+
                     $.ajax({
-                        url: "../models/admin/addClientTeam.php",
+                        url: "../models/admin/editClientSelect.php",
                         method: "post",
                         dataType: "json",
                         data:{
-                            team : team,
+                            clicked : dataId
                         },
                         success:function(data){
                             console.log("sve je ok sa serverom");
                             console.log(data);
                             printFormAddTeam(data);
+                            insertTeamClient();
                         },
                         error:function(xhr){
                             if(xhr.status==400){
@@ -901,52 +873,87 @@ if(url.indexOf("login.php")!=-1){
                             }
                         }
                     });
-                   
-                })
-                printFormAddTeam = (data) => {
-                   let ispis=` <h2 class="naslovAdmin">New Client Club</h2>
-                   <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5" enctype="multipart/form-data">
-                    <div class="form-group col-12">
-                        <label for="exampleFormControlTextarea1">Team</label>
-                        <select class="form-control form-control-md" id="team">
-                                
-                        </select>
-                    </div>
-                       
-                    <button type="submit" class="btn btn-primary col-12" id="btnEditClient">Edit Client</button>
-                        <input type="hidden" id="btnId" value="${data.id_client}"/>
-                    </form>`;
-                   document.getElementById("prikaz").innerHTML=ispis;
+                    printFormAddTeam = (data) => {
+                        let ispis=` <h2 class="naslovAdmin">New Client Club</h2>
+                        <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5" enctype="multipart/form-data">
+                         <div class="form-group col-12">
+                             <label for="exampleFormControlTextarea1">Team</label>
+                             <select class="form-control form-control-md" id="team">
+                                     
+                             </select>
+                         </div>
+                         <div class="form-group col-12">
+                         <label for="exampleFormControlTextarea1">Contract Signing</label>
+                         <input type="date" class="form-control" id="contract" value="">
+                        </div>  
+                         <button type="submit" class="btn btn-primary col-12" id="btnTeamClient">Add Client Team</button>
+                             <input type="hidden" id="btnId" value="${data.id_client}"/>
+                         </form>`;
+                        document.getElementById("prikaz").innerHTML=ispis;
+                    
+                        $.ajax({
+                            url: "../models/admin/selectClub.php",
+                            method: "post",
+                            dataType: "json",
+                            success:function(data){
+                                console.log("sve je ok sa serverom");
+                                teamLinks(data);
+                            },
+                            error:function(xhr){
+                                console.log(xhr);
+                            }
+                         
+                         });
 
-                   $.ajax({
-                    url: "../models/admin/selectClub.php",
-                    method: "post",
-                    dataType: "json",
-                    success:function(data){
-                        console.log("sve je ok sa serverom");
-                        teamLinks(data);
-                    },
-                    error:function(xhr){
-                        console.log(xhr);
-                    }
-                    
-                    })
-                    teamLinks = (links) => {
-                        let ispis=`<option value="0">Seelct Team</option>`;
-                        links.forEach(i=>{
-                           
-                    
+                        teamLinks = (links) => {
+                             let ispis=`<option value="0">Seelct Team</option>`;
+                             links.forEach(i=>{
                                 ispis+=singleTeam(i);
-                            
-                        });
-                        document.getElementById("team").innerHTML=ispis;
+                                 
+                             });
+                             document.getElementById("team").innerHTML=ispis;
+                        }
+                 
+                        singleTeam = (i) => {
+                             return `<option value="${i.id_club}">${i.name}</option>`;
+                        }
                     }
+                })
+
             
-                    singleTeam = (i) => {
-                        return `<option value="${i.id_club}">${i.name}</option>`;
-                    }
-                }
-     
+            }
+            insertTeamClient = () =>{
+                document.getElementById("btnTeamClient").addEventListener("click",function(e){
+                    e.preventDefault();
+                    let formData = new FormData();
+                    formData.append("idClient",document.getElementById("btnId").value);
+                    formData.append("team",document.getElementById("team").value);
+                    formData.append("contract",document.getElementById("contract").value);
+                    formData.append("clicked",true);
+                    $.ajax({
+                        url: "../models/admin/addClientTeam.php",
+                        method: "post",
+                        dataType: "json",
+                        data:formData,
+                        contentType:false,
+                        processData:false,
+                        success:function(data){
+                            console.log("sve je ok sa serverom");
+                            alert("Succcess");
+                        },
+                        error:function(xhr){
+                            if(xhr.status==400){
+    
+                            }
+                            if(xhr.status==500){
+                                console.log(xhr.responseJSON.errorMsgServer);
+                            }
+                            else{
+                                console.log(xhr);
+                            }
+                        }
+                    })
+                });
             }
         }
         // CLIENT DELETE
@@ -1058,19 +1065,7 @@ if(url.indexOf("login.php")!=-1){
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            
-                            <div class="form-group col-6">
-                                <label for="exampleFormControlTextarea1">Team</label>
-                                <select class="form-control form-control-md" id="team">
-                                        
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="exampleFormControlTextarea1">Contract Signing</label>
-                                <input type="date" class="form-control" id="contract" value="${data.dateContract}">
-                            </div>
-                        </div>
+                      
                      
                         <div class="form-group col-6">
                                 <label for="exampleInputEmail1">Player Img</label>
@@ -1133,7 +1128,7 @@ if(url.indexOf("login.php")!=-1){
                         let ispis=`<option value="0">Seelct Team</option>`;
                         links.forEach(i=>{
                             if(i.id_club==podaci.id_club){
-                                ispis+=`<option value="${i.id_active}" selected>${i.name}</option>`;
+                                ispis+=`<option value="${i.id_club}" selected>${i.name}</option>`;
                             }
                             else{
                                 ispis+=singleTeam(i);
@@ -1160,8 +1155,8 @@ if(url.indexOf("login.php")!=-1){
                     formData.append("weight",document.getElementById("weight").value);
                     formData.append("dob",document.getElementById("dob").value);
                     formData.append("active",document.getElementById("active").value);
-                    formData.append("contract",document.getElementById("contract").value);
-                    formData.append("team",document.getElementById("team").value);
+                    // formData.append("contract",document.getElementById("contract").value);
+                    // formData.append("team",document.getElementById("team").value);
                     formData.append("clientImg",document.getElementById("clientImg").files[0]);
                     formData.append("clicked",true);
                     $.ajax({
