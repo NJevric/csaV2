@@ -31,13 +31,21 @@
             
             $queryPass = "SELECT password FROM user WHERE password=?";
             $resultPass=$conn->prepare($queryPass);
-            
+               
+            $queryEmail = "SELECT email FROM user WHERE email=?";
+            $resultEmail=$conn->prepare($queryEmail);
           
             $queryRole = "SELECT id_role FROM user WHERE id_role IN (1,2) AND email=? and password=?";
             $resultRole = $conn->prepare($queryRole);
 
             try{
                 
+                $resultEmail->execute([$email]);
+                if($resultEmail->rowCount()!=1){
+                    $error["errorEmail"]="Wrong email, try again";
+                    $code=422; 
+                }
+
                 $resultPass->execute([$password]);
                 if($resultPass->rowCount()!=1){
                     $error["errorPass"]="Wrong password, try again";
@@ -68,7 +76,8 @@
             }
             catch(PDOException $e){
                 $code=500;
-                $error["errMsg"]=["An error has ocured with server"];
+                $error=["errorMsg"=>$e->getMessage()];
+                errorLog($e->getMessage());
             }
         } 
     }

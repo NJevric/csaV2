@@ -1,13 +1,24 @@
 <?php
 
+session_start();
+header("Content-type: application/json");
 require_once("../../config/connection.php");
-    
-    global $conn;
-    // $queryClients = "SELECT * FROM person p INNER JOIN person_img pi ON p.id_person=pi.id_person INNER JOIN client c ON p.id_person=c.id_person INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN position po ON po.id_position=cp.id_position";
-    $queryClients = "SELECT * FROM person p INNER JOIN client c ON p.id_person=c.id_person INNER JOIN person_img pi ON pi.id_person=p.id_person";
+$error["errorMsg"]=['An error has ocured, bad request'];
+$code=400;
+
+try{
+    $queryClients = "SELECT * FROM person p INNER JOIN client c ON p.id_person=c.id_person INNER JOIN person_img pi ON pi.id_person_img=p.id_person_img";
     $resultClients = executeQuery($queryClients);
-    // header('Content-Type: application/json');
-    echo json_encode($resultClients);
+    $code=200;
+}
+
+catch(PDOException $e){
+    $code=500;
+    $error=["errorMsg"=>$e->getMessage()];
+    errorLog($e->getMessage());
+}
+echo json_encode($resultClients);
+http_response_code($code);
    
    
 

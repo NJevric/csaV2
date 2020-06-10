@@ -57,7 +57,8 @@ if(isset($_POST['clicked'])){
     }
     if($code!=422){ 
 
-        $queryRegister="INSERT INTO person VALUES(NULL,?,?,1)";
+        $idImgProfile=68;
+        $queryRegister="INSERT INTO person VALUES(NULL,?,?,$idImgProfile)";
         $resultRegister=$conn->prepare($queryRegister);
         
         try{
@@ -77,7 +78,8 @@ if(isset($_POST['clicked'])){
         }
         catch(PDOException $e){
             $code=500;
-            $error["errorMsg"]=["An error has ocured with server"];
+            $error=["errorMsg"=>$e->getMessage()];
+            errorLog($e->getMessage());
         }
     }
 }

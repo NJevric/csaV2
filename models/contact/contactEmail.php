@@ -1,4 +1,9 @@
 <?php
+session_start();
+header("Content-type: application/json");
+require_once("../../config/connection.php");
+$error["errorMsg"]=['An error has ocured, bad request'];
+$code=400;
 
 if(isset($_POST['clicked'])){
     $name=$_POST['nameJSON'];
@@ -6,43 +11,47 @@ if(isset($_POST['clicked'])){
     $email=$_POST['emailJSON'];
     $text=$_POST['textJSON'];
 
-    $status = 200;
-
-    $errors=[];
-
     if(!preg_match("/^[A-Z][a-z]{2,19}(\s[A-Z][a-z]{2,19})*$/", $name)){
-        $greske[]="Enter valid name format";
+        $error["errorName"]="Enter valid name format";
+        $code = 422;
     }
     if(!preg_match("/^[a-zA-Z]+$/", $subject)){
-        $greske[]="Enter valid subject format";
+        $error["errorSubject"]="Enter valid subject format";
+        $code = 422;
     }
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        $greske[]="Enter valid email format";
+        $error["errorEmail"]="Enter valid email format";
+        $code = 422;
     }
     if(strlen($text)<10){
-        $greske[]="Message must contain min 10 characters";
+        $error["errorText"]="Message must contain min 10 characters";
+        $code = 422;
     }
     if(strlen($text)>200){
-        $greske[]="Message can contain max 200 characters";
+        $error["errorText"]="Message can contain max 200 characters";
+        $code = 422;
     }
-    if(count($errors)){
-        $_SESSION["errContact"]=$errors;
-        header("Location: ../login.php");
+    try{
+
+       if($code!=422){
+            $adresaprimaoca='njevric9@gmail.com,jevra997@gmail.com';
+            $naslov='Message from Csa website';
+            $sadrzajMail='From: ' .$name. "\n" . 'Subject: ' . $subject . "\n" . 'Email :' .$email. "\n" . "Content: \n".$text;
+            $dolazniSajt='From:csasportsmanagement.com';
+            mail($adresaprimaoca,$naslov,$sadrzajMail,$dolazniSajt);
+            $code=200; 
+       }
+        
     }
-    
-    http_response_code($status);
-    echo json_encode("uspeh");
-    $adresaprimaoca='njevric9@gmail.com,jevra997@gmail.com';
-    $naslov='Message from Csa website';
-    $sadrzajMail='From: ' .$name. "\n" . 'Subject: ' . $subject . "\n" . 'Email :' .$email. "\n" . "Content: \n".$text;
-    $dolazniSajt='From:csasportsmanagement.com';
-    mail($adresaprimaoca,$naslov,$sadrzajMail,$dolazniSajt);
-    
-    
+    catch(PDOException $e){
+        $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
+    }
 }
-else{
-    echo "Cao hakeru";
-}
+echo json_encode($error);
+http_response_code($code);
+
 
 
 ?>
