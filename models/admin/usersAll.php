@@ -8,12 +8,15 @@ $code=400;
 
 if(isset($_POST['clicked'])){
     $queryUser="SELECT * FROM person p INNER JOIN user u ON p.id_person=u.id_person INNER JOIN person_img pi ON pi.id_person_img=p.id_person_img INNER JOIN role r ON r.id_role=u.id_role";
-    $resultUser=executeQuery($queryUser);
-    $code=200;
-}
-else{
-    $error["errorMsgServer"]=["An error has occurred with server"];
-    $code=500;
+    try{
+        $resultUser=executeQuery($queryUser);
+        $code=200;
+    }
+    catch(PDOException $e){
+        $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
+    }
 }
 
 echo json_encode($resultUser);

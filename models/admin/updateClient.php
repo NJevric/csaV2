@@ -14,8 +14,8 @@ if(isset($_POST['clicked'])){
     $weight=$_POST['weight'];
     $dob=$_POST['dob'];
     $active=$_POST['active'];
-    $contract=$_POST['contract'];
-    $team=$_POST['team'];
+    // $contract=$_POST['contract'];
+    // $team=$_POST['team'];
 
     if(isset($_FILES['clientImg']) && !empty($_FILES['clientImg'])){
 
@@ -70,12 +70,12 @@ if(isset($_POST['clicked'])){
         }
     }
     
-    // try{
-        $queryUpdateClient="UPDATE person p INNER JOIN client c ON p.id_person=c.id_person  INNER JOIN passport_client pc ON c.id_client=pc.id_client INNER JOIN client_club cc ON c.id_client=cc.id_client INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN active a ON a.id_active=c.id_active SET p.name=?,p.last_name=?,p.id_person_img=?,c.height=?,c.weight=?,c.dob=?,c.id_active=?,cc.id_club=?,cc.dateContract=? WHERE c.id_client=?";
+    try{
+        $queryUpdateClient="UPDATE person p INNER JOIN client c ON p.id_person=c.id_person  INNER JOIN passport_client pc ON c.id_client=pc.id_client INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN active a ON a.id_active=c.id_active SET p.name=?,p.last_name=?,p.id_person_img=?,c.height=?,c.weight=?,c.dob=?,c.id_active=? WHERE c.id_client=?";
         $resultUpdateClient=$conn->prepare($queryUpdateClient);
         
         if($resultInsertImg){
-            if($resultUpdateClient->execute([$firstName,$lastName,$idImg,$height,$weight,$dob,$active,$team,$contract,$id])){
+            if($resultUpdateClient->execute([$firstName,$lastName,$idImg,$height,$weight,$dob,$active,$id])){
                 $code=204;
             }
             else{
@@ -84,39 +84,26 @@ if(isset($_POST['clicked'])){
         }
         else{
             
-            $queryUpdateClientNoImg="UPDATE person p INNER JOIN client c ON p.id_person=c.id_person  INNER JOIN passport_client pc ON c.id_client=pc.id_client INNER JOIN client_club cc ON c.id_client=cc.id_client INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN active a ON a.id_active=c.id_active SET p.name=?,p.last_name=?,c.height=?,c.weight=?,c.dob=?,c.id_active=?,cc.id_club=?,cc.dateContract=? WHERE c.id_client=?";
+            $queryUpdateClientNoImg="UPDATE person p INNER JOIN client c ON p.id_person=c.id_person  INNER JOIN passport_client pc ON c.id_client=pc.id_client INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN active a ON a.id_active=c.id_active SET p.name=?,p.last_name=?,c.height=?,c.weight=?,c.dob=?,c.id_active=? WHERE c.id_client=?";
             $resultUpdateClientNoImg=$conn->prepare($queryUpdateClientNoImg);
-            if($resultUpdateClientNoImg->execute([$firstName,$lastName,$height,$weight,$dob,$active,$team,$contract,$id])){
+            if($resultUpdateClientNoImg->execute([$firstName,$lastName,$height,$weight,$dob,$active,$id])){
                 $code=204;
             }
              
-            if($passport2==0){
-
-            }
-            if($active==0){
-
-            }
-            if($team==0){
-
-            }
-            if($position==0){
-
-            }
             else{
                 $code=422;
             }
-        }
-        
-    // }
-    // catch(PDOException $e){
-    //     $error["errorMsgServer"]=["An error has occurred with server"];
-    //     $code=500;
-    // }
+        }  
+    }
+    catch(PDOException $e){
+        $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
+    }
     
 }
 $niz=[$resultInsertImg,$resultUpdateClient,$queryUpdateClientNoImg];
 
-// echo json_encode();
 echo json_encode($niz);
 http_response_code($code);
 ?>

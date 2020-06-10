@@ -2,7 +2,7 @@
 
 header("Content-type: application/json");
 require_once("../../config/connection.php");
-// $error["errorMsg"]=['An error has ocured, bad request'];
+$error["errorMsg"]=['An error has ocured, bad request'];
 $code=400;
 
 if(isset($_POST['clicked'])){
@@ -24,12 +24,12 @@ if(isset($_POST['clicked'])){
         }
     }
     catch(PDOException $e){
-        $error["errorMsgServer"]=["An error has occurred with server"];
         $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
     }
     
 }
 echo json_encode($resultNewsInsert);
-// echo json_encode($error);
 http_response_code($code);
 ?>

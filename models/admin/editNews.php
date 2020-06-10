@@ -23,8 +23,9 @@ if(isset($_POST['clicked'])){
         }
     }
     catch(PDOException $e){
-        $error["errorMsgServer"]=["An error has occurred with server"];
         $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
     }
     
 }

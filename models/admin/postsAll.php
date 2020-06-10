@@ -6,13 +6,19 @@ $error["errorMsg"]=['An error has ocured, bad request'];
 $code=400;
 
 if(isset($_POST['clicked'])){
+
     $queryNews="SELECT * FROM news ORDER BY date DESC";
-    $resultNews = executeQuery($queryNews);
-    $code=200;
-}
-else{
-    $error["errorMsgServer"]=["An error has occurred with server"];
-    $code=500;
+
+    try{
+        $resultNews = executeQuery($queryNews);
+        $code=200;
+    }
+     
+    catch(PDOException $e){
+        $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
+    }
 }
 
 echo json_encode($resultNews);

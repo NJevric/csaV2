@@ -144,13 +144,13 @@ if(isset($_POST['clicked'])){
         
     }
     catch(PDOException $e){
-        $error["errorMsgServer"]=["An error has occurred with server"];
         $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
     }
     
 }
 $niz=[$resultInsertImg,$resultPersonInsert,$resultClientInsert,$resultClientPosition,$resultClientPassport];
 echo json_encode($niz);
-// echo json_encode($error);
 http_response_code($code);
 ?>
