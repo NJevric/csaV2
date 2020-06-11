@@ -7,7 +7,8 @@ define("ABSOLUTE_PATH", $_SERVER["DOCUMENT_ROOT"]."/csa-beta");
 define("ENV_FAJL", ABSOLUTE_PATH."/config/.env");
 define("ERR_FAJL", ABSOLUTE_PATH."/data/error_log.txt");
 define("LOG_FAJL", ABSOLUTE_PATH."/data/log.txt");
-
+define("LOGIN_FAJL", ABSOLUTE_PATH."/data/login.txt");
+define("AUTOR_FAJL", ABSOLUTE_PATH."/data/autor.txt");
 
 define("SERVER", env("SERVER"));
 define("DATABASE", env("DBNAME"));

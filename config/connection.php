@@ -31,8 +31,15 @@ function errorLog($error){
 function pageViews(){
     $open = @ fopen(LOG_FAJL, "a");
     if($open){
-        $date = date('d-m-Y H:i:s');
-        @ fwrite($open, "Page: "."{$_SERVER['REQUEST_URI']}\n" . "Date and Time: " . "{$date}\t" . "IP Address: "."{$_SERVER['REMOTE_ADDR']}\t\n"."\n");
+        $date = date('d-m-Y');
+        @ fwrite($open,"{$_SERVER['REQUEST_URI']}\t{$date}\t{$_SERVER['REMOTE_ADDR']}\t\n");
         @ fclose($open);
     }
+}
+
+function logg($id){
+    $open= @fopen(LOGIN_FAJL, "a");
+    $insert=$id."\n";
+    @fwrite($open,$insert);
+    @fclose($open);
 }
