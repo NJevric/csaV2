@@ -15,12 +15,10 @@
                     </div>
                     <div class="navigacijaTelefon">
                         <ul class="nav-linksTelefon">
-                            <li><a href="index.php?page=home" class="link link--kukuri" data-letters="Home"> Home</a></li>
-                            <li><a href="index.php?page=services" class="link link--kukuri" data-letters="Services">Services</a></li>
-                            <li><a href="index.php?page=clients" class="link link--kukuri" data-letters="Clients">Clients</a></li>
-                            <li><a href="index.php?page=news" class="link link--kukuri" data-letters="News">News</a></li>
-                            <li><a href="index.php?page=contact" class="link link--kukuri" data-letters="Contact">Contact</a></li>
-                            
+                        <?php
+                            require_once("models/nav/navSelect.php");
+                            nav();
+                        ?>
                         </ul>
                     </div>
                           
@@ -30,12 +28,15 @@
                         <div class="ham"></div>
                         <div class="ham"></div>
                     </div>
-                    <div class="navigacija">
+                   <div class="navigacija">
                         <ul class="nav-links">
-                            <li><a href="index.php?page=home" class="link link--kukuri" data-letters="Home"> Home</a></li>
-                            <li><a href="index.php?page=services" class="link link--kukuri" data-letters="Services">Services</a></li>
-                            <li><a href="index.php?page=clients" class="link link--kukuri" data-letters="Clients">Clients</a></li>
-                            <li><a href="index.php?page=news" class="link link--kukuri" data-letters="News">News</a></li>
-                            <li><a href="index.php?page=contact" class="link link--kukuri" data-letters="Contact">Contact</a></li>
+                        <?php
+                            require_once("models/nav/navSelect.php");
+                            nav();
+                        ?>
                         </ul>
                     </div>
+                    
+                   
+                   
+                   

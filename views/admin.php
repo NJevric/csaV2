@@ -2,7 +2,8 @@
 session_start();
  require_once("../models/admin/adminName.php"); 
  if(!isset($_SESSION['admin'])){
-  header("Location:404.php");
+  header("Location:../index.php");
+
 }
 ?>
 <!DOCTYPE html>
@@ -67,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 mb-3">
         <div class="image d-flex justify-content-center">
-          <img src="<?=$resultAdmin->src ?>" class="img-circle elevation-2" alt="<?=$resultAdmin->alt ?>">
+          <img src="../<?=$resultAdmin->src ?>" class="" alt="<?=$resultAdmin->alt ?>">
         </div>
         <p class="d-block text-white mb-1 d-flex justify-content-center my-2"><?=$resultAdmin->name . " " . $resultAdmin->last_name?></p>
        
@@ -80,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="admin.php" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
                 </a>
@@ -101,9 +102,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" id="addClient">
                 <i class="fas fa-caret-right mr-1"></i>
                   <p>Add Client</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="addPassport">
+                <i class="fas fa-caret-right mr-1"></i>
+                  <p>Add Passport</p>
                 </a>
               </li>
             </ul>
@@ -124,7 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" id="addPost">
                 <i class="fas fa-caret-right mr-1"></i>
                   <p>Add Post</p>
                 </a>
@@ -146,12 +153,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>View All Users</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="fas fa-caret-right mr-1"></i>
-                  <p>Add User</p>
-                </a>
-              </li>
             </ul>
           </li>
         </ul>
@@ -168,14 +169,162 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-12">
-            <!-- <h1 class="m-0 text-dark">Dashboard</h1> -->
-            <div id="prikaz" class="d-flex justify-content-center">
-                
-                </div>
-            </di>
-          </div><!-- /.col -->
+            <div id="prikaz" class="d-block">
           
-        </div><!-- /.row -->
+                
+              <?php
+                    require_once("../functions.php");
+                    $pages=pagesAll();
+                    $numOfPages=numOfPages();
+              ?>
+             <div class="col-12 mb-4">
+                <h2 class="naslovAdmin">Dashboard</h2>
+              </div>
+              <div class="d-flex justify-content-center">
+                <div class="col-lg-2 col-10 mx-auto">
+               
+                  <table class="table">
+                    <thead>
+                      <th colspan="<?=$numOfPages?>">Number Of Logged Users</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                       
+                        <td class="font-weight-bold"><?=numOfLogUsers();?></td>
+                       
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-8 col-10 mx-auto tabele">
+                  <table class="table">
+                    <thead>
+                      <th colspan="<?=$numOfPages;?>">Page views in last 24h</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php foreach($pages as $i):?>
+                        <td><?=$i;?></td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisit("1 day ago") as $i):?>
+                        <td><?=$i;?>%</td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisitNum("1 day ago") as $i):?>
+                        <td><?=$i;?> page views</td>
+                        <?php endforeach;?>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table my-5">
+                    <thead>
+                      <th colspan="<?=$numOfPages;?>">Page views in last 7 days</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php foreach($pages as $i):?>
+                        <td><?=$i;?></td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisit("7 days ago") as $i):?>
+                        <td><?=$i;?>%</td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisitNum("7 days ago") as $i):?>
+                        <td><?=$i;?> page views</td>
+                        <?php endforeach;?>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table">
+                    <thead>
+                      <th colspan="<?=$numOfPages;?>">Page views in last 30 days</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php foreach($pages as $i):?>
+                        <td><?=$i;?></td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisit("30 days ago") as $i):?>
+                        <td><?=$i;?>%</td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisitNum("30 days ago") as $i):?>
+                        <td><?=$i;?> page views</td>
+                        <?php endforeach;?>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table my-5">
+                    <thead>
+                      <th colspan="<?=$numOfPages;?>">Page views in last 90 days</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php foreach($pages as $i):?>
+                        <td><?=$i;?></td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisit("90 days ago") as $i):?>
+                        <td><?=$i;?>%</td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisitNum("90 days ago") as $i):?>
+                        <td><?=$i;?> page views</td>
+                        <?php endforeach;?>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table my-5">
+                    <thead>
+                      <th colspan="<?=$numOfPages;?>">Page views in last 180 days</th>
+                    
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php foreach($pages as $i):?>
+                        <td><?=$i;?></td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisit("180 days ago") as $i):?>
+                        <td><?=$i;?>%</td>
+                        <?php endforeach;?>
+                      </tr>
+                      <tr>
+                        <?php foreach(pageVisitNum("180 days ago") as $i):?>
+                        <td><?=$i;?> page views</td>
+                        <?php endforeach;?>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>  
+              </div>
+             
+            </div>
+         
+            
+          </div>
+        </div>
+      </di>
+    </div><!-- /.col -->
+          
+  </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->

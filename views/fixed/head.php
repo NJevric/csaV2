@@ -1,6 +1,14 @@
+
 <!DOCTYPE html>
 <html>
     <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146600569-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-146600569-1');
+        </script>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -15,6 +23,6 @@
         <link href="https://fonts.googleapis.com/css?family=Muli|Righteous&display=swap" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Manrope&display=swap" rel="stylesheet">
         <link href="assets/css/css/linkstyles.css" rel="stylesheet"/>
-        
+      
     </head>
     <body>
