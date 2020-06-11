@@ -3,6 +3,7 @@
 require_once "config/connection.php";
   
 include 'views/fixed/head.php';
+pageViews();
 include 'views/fixed/header.php';
 
 if(!isset($_GET['page'])){
@@ -25,6 +26,12 @@ else{
         break;
         case 'player':
             include 'views/player.php';
+        break;
+        case 'blog':
+            include 'views/blog.php';
+        break;
+        case 'author':
+            include 'views/author.php';
         break;
         default:
             include 'views/home.php';
