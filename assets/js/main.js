@@ -33,9 +33,6 @@ window.onload=function(){
         return this.document.getElementById("home_background").classList.remove("home");
     }
      
-     if(url.indexOf("page=home")!=-1){
-        this.console.log("proba");
-    }
      if(url.indexOf("page=services")!=-1){
         removeClassHome();
          this.document.getElementById("home_background").classList.add("services");
@@ -52,7 +49,11 @@ window.onload=function(){
         removeClassHome();
          this.document.getElementById("home_background").classList.add("contact");
      }
-     if(url.indexOf("page=player")!=-1 || url.indexOf("page=vest")!=-1 || url.indexOf("page=contact")!=-1 || url.indexOf("page=news")!=-1 || url.indexOf("page=clients")!=-1 || url.indexOf("page=services")!=-1){
+     if(url.indexOf("page=author")!=-1){
+        removeClassHome();
+        this.document.getElementById("home_background").classList.add("author");
+     }
+     if(url.indexOf("page=player")!=-1 || url.indexOf("page=blog")!=-1 || url.indexOf("page=contact")!=-1 || url.indexOf("page=news")!=-1 || url.indexOf("page=clients")!=-1 || url.indexOf("page=services")!=-1 || url.indexOf("page=author")!=-1){
          this.document.getElementById("licenca").style.display="none";
          this.document.getElementById("licencaTel").style.display="none";
      }
@@ -134,20 +135,11 @@ window.onload=function(){
         projectList.scrollLeft = scrollLeft - walk;
     });
     
-    
     }
     
-
     // CLIENTS
     if(url.indexOf("page=clients")!=-1){
-        // function upisiVrednostiULs(data){
-        //     let  =data.map(x=>x.id_client);
-        //     localStorage.setItem("idIgrac",JSON.stringify(idIgrac));
-        // }
-        // function vratiVrednostIzLs(){
-        //     return JSON.parse(localStorage.getItem("idIgrac"));
-            
-        // }
+
         ajaxClients = (callbackSuccess,fileName) =>{
           $.ajax({
             url:"models/clients/"+fileName,
@@ -183,7 +175,6 @@ window.onload=function(){
         
         singleClient = (i) => {
             return `
-            
             <div class="client col-md-3 col-6 text-center"">
             <img class="" src="${i.src}" alt="${i.alt}">
             <h4 class="mt-3 text-center">${i.name + " " + i.last_name}</h4>
@@ -214,8 +205,6 @@ window.onload=function(){
             return `<option value="${i.id_active}">${i.nameActive}</option>`;
         }
 
-
-
         (function(){
             ajaxClients(
                 function(data){
@@ -227,11 +216,9 @@ window.onload=function(){
                 function filter(){
 
                     let active = $("#contractDdl").val();
-                    
-                    // let kliknuto = $(".position");
+            
                     let nizCekirano = [];
                     
-                    // kliknuto.change(function(){
                     let cekirano = $(".position:checked");
                     console.log(cekirano);
                     
@@ -244,7 +231,7 @@ window.onload=function(){
                     if(nizCekirano.length==0){
                         nizCekirano.push(0);
                     }
-                    // });
+                
 
                     $.ajax({
                         url:"models/clients/clientsFilter.php",
@@ -272,24 +259,6 @@ window.onload=function(){
                         filter();
                     });
                 }  
-                    // $.ajax({
-                    //     url:"models/clients/clientsFilter.php",
-                    //     method:"post",
-                    //     dataType:"json",
-                    //     data:{
-                    //         position : nizCekirano
-                    //     },
-                    //     success:function(data){
-
-                    //         console.log(position);
-                    //         console.log(data);         
-                    //         clientsAll(data);   
-                    //     },
-                    //     error:function(xhr){
-                    //         console.log(xhr);
-                    //         }
-                    // });
-                // })
             },
                 "clientsPosition.php"
             );
@@ -307,51 +276,19 @@ window.onload=function(){
         }
 
         singlePositionLink = (i) => {
-            // return `<option value="${i.id_position}">${i.name_position}</option>`;
             return `<label for="${i.name_position}">
             <input type="checkbox" name="chb" class="mr-2 position" id="${i.id_position}" value="${i.id_position}"/>${i.name_position}
         </label>`;
         }
         
-        
-        
-
-
-
-
-        // let kliknuto = document.getElementsByClassName("position");
-        //     for(let i of kliknuto){
-        //         i.addEventListener("change",function(){
-        //             let position = $(this).val();
-        //             $.ajax({
-        //                 url:"models/clients/clientsFilter.php",
-        //                 method:"get",
-        //                 dataType:"json",
-        //                 data:{
-        //                     position : position
-        //                 },
-        //                 success:function(data){
-        //                     clientsAll(data);
-        //                     console.log(position);
-        //                     console.log(data);
-        //                     console.log("jebi se");
-        //                 },
-        //                 error:function(xhr){
-        //                     console.log(xhr);
-        //                 }
-        //             });
-        //           });
-        //     }  
-        
-         
     }
     
     // NEWS
     if(url.indexOf("page=news")!=-1){
 
-        ajaxNews = (callbackSuccess) => {
+        ajaxNews = (callbackSuccess,fileName) => {
             $.ajax({
-                url:"models/news/newsSelect.php",
+                url:"models/news/"+fileName,
                 method:"get",
                 dataType:"json",
                 success:callbackSuccess,
@@ -366,7 +303,10 @@ window.onload=function(){
                 function(data){
                     console.log(data);
                     newsAll(data);
-                }
+                    sortNewsIspis();
+                    sortNews();
+                },
+                "newsSelect.php"
             );
         })();
 
@@ -385,9 +325,40 @@ window.onload=function(){
             <p class="newsTekst mb-3">${i.text.substring(0,150) + "..."}</p>
             <a href="index.php?page=blog&id=${i.id_news}" class="newsBtn mt-4">READ MORE</a>
         </div>`;
-        }
-    }
 
+        }
+    
+        sortNewsIspis = () => {
+            let ispis=`<option value="0">Sort By</option>
+            <option value='1'>Newest</option>
+            <option value='2'>Oldest</option>`;
+           
+            document.getElementById("sortNews").innerHTML=ispis;
+        }
+
+        sortNews = () =>{
+            document.getElementById("sortNews").addEventListener("change",function(e){
+                e.preventDefault();
+                let sort = document.getElementById("sortNews").value;
+                $.ajax({
+                    url:"models/news/sortNews.php",
+                    method:"post",
+                    dataType:"json",
+                    data:{
+                        sort : sort
+                    },
+                    success:function(data){
+                        console.log(data);
+                        newsAll(data);
+                    },
+                    error:function(xhr){
+                        console.log(xhr);
+                    }
+                });
+            });
+        }
+            
+    }
 
  // CONTACT
  if(url.indexOf("page=contact")!=-1){
@@ -787,7 +758,7 @@ if(url.indexOf("login.php")!=-1){
                     
                     let ispis=`
                     <h2 class="naslovAdmin">All Clients</h2>
-                    <div class="row player">
+                    <div class="row player d-flex justify-content-center">
                     <table class="table tableClients">
                     <tbody>
                         <tr>
@@ -875,7 +846,7 @@ if(url.indexOf("login.php")!=-1){
                     });
                     printFormAddTeam = (data) => {
                         let ispis=` <h2 class="naslovAdmin">New Client Club</h2>
-                        <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5" enctype="multipart/form-data">
+                        <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5 mx-auto" enctype="multipart/form-data">
                          <div class="form-group col-12">
                              <label for="exampleFormControlTextarea1">Team</label>
                              <select class="form-control form-control-md" id="team">
@@ -1030,7 +1001,7 @@ if(url.indexOf("login.php")!=-1){
                     printEditForm = (data) => {
                         let ispis=`
                     <h2 class="naslovAdmin">Edit Client</h2>
-                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5" enctype="multipart/form-data">
+                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5 mx-auto" enctype="multipart/form-data">
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="exampleInputEmail1">First Name</label>
@@ -1193,7 +1164,7 @@ if(url.indexOf("login.php")!=-1){
             printForminsertClient = () => {
                 let ispis=`
                     <h2 class="naslovAdmin">Add Client</h2>
-                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5" enctype="multipart/form-data">
+                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5 mx-auto" enctype="multipart/form-data">
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="exampleInputEmail1">First Name</label>
@@ -1433,7 +1404,7 @@ if(url.indexOf("login.php")!=-1){
             formPassport = () =>{
                 let ispis=`
                     <h2 class="naslovAdmin">Add Passport</h2>
-                        <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5">
+                        <form action="" method="POST" class="editNewsForm col-lg-4 col-11 mt-5 mx-auto">
                 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Country Name</label>
@@ -1509,7 +1480,7 @@ if(url.indexOf("login.php")!=-1){
                 postsAllAdmin = (data) => {
                     let ispis=`
                     <h2 class="naslovAdmin">All Posts</h2>
-                    <div class="row player">
+                    <div class="row player d-flex justify-content-center">
                         <table class="table tableClients">
                         <tbody>
                             <tr>
@@ -1557,7 +1528,7 @@ if(url.indexOf("login.php")!=-1){
             printFormInsertPost = () => {
                 let ispis=`
                     <h2 class="naslovAdmin">Add Post</h2>
-                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5">
+                        <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5 mx-auto">
                 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Headline</label>
@@ -1571,7 +1542,7 @@ if(url.indexOf("login.php")!=-1){
                             <label for="exampleFormControlTextarea1">Post Content</label>
                             <textarea class="form-control" id="text" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary col-12 btnEditPost" id="btnInsertPost">Edit Post</button>
+                        <button type="submit" class="btn btn-primary col-12 btnEditPost" id="btnInsertPost">Add Post</button>
                         <input type="hidden" id="btnId" value=""/>
                     </form>`
                 
@@ -1650,7 +1621,7 @@ if(url.indexOf("login.php")!=-1){
                        
                             ispis=`
                             <h2 class="naslovAdmin">Edit Post</h2>
-                                <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5">
+                                <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5 mx-auto">
                         
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Headline</label>
@@ -1777,7 +1748,8 @@ if(url.indexOf("login.php")!=-1){
 
             usersAllAdmin = (data) => {
                 let ispis=`
-                <div class="row player">
+                <h2 class="naslovAdmin">All Users</h2>
+                <div class="row player d-flex justify-content-center">
                     <table class="table tableClients">
                     <tbody>
                         <tr>
@@ -1860,7 +1832,7 @@ if(url.indexOf("login.php")!=-1){
                        
                             ispis=`
                             <h2 class="naslovAdmin">Edit User</h2>
-                                <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5" enctype="multipart/form-data">
+                                <form action="" method="POST" class="editNewsForm col-lg-5 col-11 mt-5 mx-auto" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" class="form-control" id="firstName" value="${data.name}">
@@ -1958,14 +1930,6 @@ if(url.indexOf("login.php")!=-1){
             }
         }
        
-        // let userDelete = document.getElementById("userDelete");
-        
-            
-        // userDelete.dataset.delete.addEventListener("click",function(e){
-        //     e.preventDefault();
-        //     alert("jebi");
-        // });
-        
     }
 }
  
@@ -1981,7 +1945,6 @@ function prikaziChbZaFilter() {
         expanded = false;
     }
 }
-
 
 stilGreskaBordura = (id) => {
     return document.getElementById(id).style.borderBottom="2px solid red";
