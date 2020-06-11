@@ -22,13 +22,12 @@ if(isset($_POST["clicked"])){
         }
     }
     catch(PDOException $e){
-        $error["errorMsgServer"]=["An error has occurred with server"];
         $code=500;
+        $error=["errorMsg"=>$e->getMessage()];
+        errorLog($e->getMessage());
     }
     
 }
 echo json_encode($error);
 http_response_code($code);
-// $queryDeleteClient = "DELETE p,c,pc,cp,cc FROM person p INNER JOIN client c ON c.id_person=p.id_person INNER JOIN passport_client pc ON c.id_client=pc.id_client INNER JOIN client_position cp ON c.id_client=cp.id_client INNER JOIN client_club cc ON c.id_client=cc.id_client  WHERE c.id_client = ?";
-// $resultDeleteClient=$conn->prepare($queryDeleteClient);
 ?>

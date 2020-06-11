@@ -68,10 +68,11 @@
                 $resultLogin->execute([$email,$password,$idRole]);
                 if($resultLogin->rowCount()==1){
                     $user=$resultLogin->fetch(); 
-                    $_SESSION['admin']=$user;  
+                    $_SESSION['admin']=$user; 
+                    logg($_SESSION['admin']->id_user); 
                     $code=200;      
                 }
-               
+                
                 
             }
             catch(PDOException $e){
