@@ -4,6 +4,6 @@ Project for CSA Sports Management
 Full Stack Website with login to admin dashboard for admins and 
 display of site visits over some period of time
 <br/>
-<b>Date: </b>june 2019
+<b>Date: </b>june 2020
 ## Link to website
 https://csasportsmanagement.com/
